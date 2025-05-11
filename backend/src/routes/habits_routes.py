@@ -24,14 +24,20 @@ def write_data(data):
 # Endpoint para obtener todos los hábitos
 @habits_bp.route('/', methods=['GET'])
 def get_habits():
+    user_email = request.args.get('user_email')
+    if not user_email:
+        return jsonify({"error": "Missing user_email"}), 400
     data = read_data()
-    return jsonify(data["habits"]), 200
+    user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
+    return jsonify(user_habits), 200
 
 
 # Endpoint para crear un nuevo hábito
 @habits_bp.route('/', methods=['POST'])
 def create_habit():
     new_habit = request.get_json()
+    if "user_email" not in new_habit:
+        return jsonify({"error": "Missing user_email"}), 400
     data = read_data()
     new_habit['id'] = len(data["habits"]) + 1
     data["habits"].append(new_habit)
@@ -64,9 +70,20 @@ def delete_habit(habit_id):
 # Endpoint para marcar un hábito como completado en una fecha específica
 @habits_bp.route('/<int:habit_id>/track', methods=['POST'])
 def track_habit(habit_id):
-    date = request.get_json().get("date", datetime.today().strftime('%Y-%m-%d'))
+    req = request.get_json()
+    user_email = req.get("user_email")
+    date = req.get("date", datetime.today().strftime('%Y-%m-%d'))
+
+    if not user_email:
+        return jsonify({"error": "Missing user_email"}), 400
+
     data = read_data()
-    data["tracking"].append({"habit_id": habit_id, "date": date})
+    # Verificamos si el hábito pertenece a ese usuario
+    habit_exists = any(h for h in data["habits"] if h["id"] == habit_id and h["user_email"] == user_email)
+    if not habit_exists:
+        return jsonify({"error": "Habit not found for user"}), 404
+
+    data["tracking"].append({"habit_id": habit_id, "user_email": user_email, "date": date})
     write_data(data)
     return jsonify({"message": "Habit tracked"}), 200
 
@@ -74,9 +91,16 @@ def track_habit(habit_id):
 # Endpoint para obtener el reporte semanal de hábitos
 @habits_bp.route('/report', methods=['GET'])
 def weekly_report():
+    user_email = request.args.get('user_email')
+    if not user_email:
+        return jsonify({"error": "Missing user_email"}), 400
+
     data = read_data()
     report = {}
-    for habit in data["habits"]:
-        count = sum(1 for t in data["tracking"] if t["habit_id"] == habit["id"])
+    user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
+
+    for habit in user_habits:
+        count = sum(1 for t in data["tracking"] if t["habit_id"] == habit["id"] and t["user_email"] == user_email)
         report[habit["name"]] = count
+
     return jsonify(report), 200
