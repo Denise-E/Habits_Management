@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date
 
 habits_bp = Blueprint('habits_bp', __name__)
 
@@ -28,6 +28,7 @@ def get_habits():
     if not user_email:
         return jsonify({"error": "Missing user_email"}), 400
     data = read_data()
+    print("user email", user_email)
     user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
     return jsonify(user_habits), 200
 
@@ -40,6 +41,7 @@ def create_habit():
         return jsonify({"error": "Missing user_email"}), 400
     data = read_data()
     new_habit['id'] = len(data["habits"]) + 1
+    new_habit['created_at'] = date.today().isoformat()
     data["habits"].append(new_habit)
     write_data(data)
     return jsonify(new_habit), 201
@@ -52,6 +54,7 @@ def update_habit(habit_id):
     data = read_data()
     for habit in data["habits"]:
         if habit["id"] == habit_id:
+            updated_habit.pop("user_email")
             habit.update(updated_habit)
             write_data(data)
             return jsonify(habit), 200
@@ -62,9 +65,14 @@ def update_habit(habit_id):
 @habits_bp.route('/<int:habit_id>', methods=['DELETE'])
 def delete_habit(habit_id):
     data = read_data()
+    habit_to_delete = next((habit for habit in data["habits"] if habit["id"] == habit_id), None)
+
+    if not habit_to_delete:
+        return jsonify({"error": "Habit not found"}), 404
+
     data["habits"] = [habit for habit in data["habits"] if habit["id"] != habit_id]
     write_data(data)
-    return jsonify({"message": "Habit deleted"}), 200
+    return jsonify(habit_to_delete), 200
 
 
 # Endpoint para marcar un hábito como completado en una fecha específica
@@ -72,7 +80,7 @@ def delete_habit(habit_id):
 def track_habit(habit_id):
     req = request.get_json()
     user_email = req.get("user_email")
-    date = req.get("date", datetime.today().strftime('%Y-%m-%d'))
+    tracked_date = req.get("date", datetime.today().strftime('%Y-%m-%d'))  # Opcional, si no se envía toma la fecha actual
 
     if not user_email:
         return jsonify({"error": "Missing user_email"}), 400
@@ -83,9 +91,9 @@ def track_habit(habit_id):
     if not habit_exists:
         return jsonify({"error": "Habit not found for user"}), 404
 
-    data["tracking"].append({"habit_id": habit_id, "user_email": user_email, "date": date})
+    data["tracking"].append({"habit_id": habit_id, "user_email": user_email, "date": tracked_date})
     write_data(data)
-    return jsonify({"message": "Habit tracked"}), 200
+    return jsonify(data["tracking"]), 200
 
 
 # Endpoint para obtener el reporte semanal de hábitos

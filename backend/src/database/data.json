@@ -6,6 +6,44 @@
             "password": "123456"
         }
     ],
-    "habits": [],
-    "tracking": []
+    "habits": [
+        {
+            "name": "Leer al menos 30 minutos",
+            "description": "Lectura para desconectarme y aprender",
+            "user_email": "denise@gmail.com",
+            "id": 1
+        },
+        {
+            "name": "Tomer 2L de agua a diario",
+            "user_email": "denise@gmail.com",
+            "id": 2
+        }
+    ],
+    "tracking": [
+        {
+            "habit_id": 1,
+            "user_email": "denise@gmail.com",
+            "date": "2025-05-10"
+        },
+        {
+            "habit_id": 1,
+            "user_email": "denise@gmail.com",
+            "date": "2025-05-11"
+        },
+        {
+            "habit_id": 2,
+            "user_email": "denise@gmail.com",
+            "date": "2025-05-10"
+        },
+        {
+            "habit_id": 2,
+            "user_email": "denise@gmail.com",
+            "date": "2025-05-11"
+        },
+        {
+            "habit_id": 1,
+            "user_email": "denise@gmail.com",
+            "date": "2025-05-07"
+        }
+    ]
 }
