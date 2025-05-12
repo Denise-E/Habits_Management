@@ -1,114 +1,142 @@
 from flask import Blueprint, request, jsonify
-import json
-import os
 from datetime import datetime, date
 
-habits_bp = Blueprint('habits_bp', __name__)
-
-DATA_FILE = os.path.join(os.path.dirname(__file__), '..', 'database', 'data.json')
-
-
-# Funciones auxiliares para leer y escribir en data.json
-def read_data():
-    if not os.path.exists(DATA_FILE):
-        return {"habits": [], "tracking": []}
-    with open(DATA_FILE, 'r') as f:
-        return json.load(f)
+from src.services.db_service import DBService
+from utils.logger import logger
 
 
-def write_data(data):
-    with open(DATA_FILE, 'w') as f:
-        json.dump(data, f, indent=4)
+habits = Blueprint('habits', __name__)
 
 
-# Endpoint para obtener todos los hábitos
-@habits_bp.route('/', methods=['GET'])
+@habits.route('/', methods=['GET'])
 def get_habits():
-    user_email = request.args.get('user_email')
-    if not user_email:
-        return jsonify({"error": "Missing user_email"}), 400
-    data = read_data()
-    print("user email", user_email)
-    user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
-    return jsonify(user_habits), 200
+    try:
+        logger.info("Getting user habits")
+        user_email = request.args.get('user_email')
+
+        if not user_email:
+            return jsonify({"error": "Missing user_email"}), 400
+
+        data = DBService.read_data()
+        user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
+
+        return jsonify(user_habits), 200
+    except Exception as e:
+        logger.error(f"Error while getting habits: {e}")
+        return jsonify({"error": "Unable to get the information"}), 400
 
 
-# Endpoint para crear un nuevo hábito
-@habits_bp.route('/', methods=['POST'])
+@habits.route('/', methods=['POST'])
 def create_habit():
-    new_habit = request.get_json()
-    if "user_email" not in new_habit:
-        return jsonify({"error": "Missing user_email"}), 400
-    data = read_data()
-    new_habit['id'] = len(data["habits"]) + 1
-    new_habit['created_at'] = date.today().isoformat()
-    data["habits"].append(new_habit)
-    write_data(data)
-    return jsonify(new_habit), 201
+    try:
+        logger.info("Creating habit")
+        new_habit = request.get_json()
+
+        if "user_email" not in new_habit:
+            return jsonify({"error": "Missing user_email"}), 400
+
+        data = DBService.read_data()
+        new_habit['id'] = len(data["habits"]) + 1
+        new_habit['created_at'] = date.today().isoformat()
+
+        data["habits"].append(new_habit)
+        DBService.write_data(data)
+
+        return jsonify(new_habit), 201
+    except Exception as e:
+        logger.error(f"Error while creating habit: {e}")
+        return jsonify({"error": "Unable to create habit"}), 400
 
 
-# Endpoint para actualizar un hábito existente
-@habits_bp.route('/<int:habit_id>', methods=['PUT'])
+@habits.route('/<int:habit_id>', methods=['PUT'])
 def update_habit(habit_id):
-    updated_habit = request.get_json()
-    data = read_data()
-    for habit in data["habits"]:
-        if habit["id"] == habit_id:
-            updated_habit.pop("user_email")
-            habit.update(updated_habit)
-            write_data(data)
-            return jsonify(habit), 200
-    return jsonify({"error": "Habit not found"}), 404
+    try:
+        logger.info("Updating habit")
+        updated_habit = request.get_json()
 
+        data = DBService.read_data()
 
-# Endpoint para eliminar un hábito
-@habits_bp.route('/<int:habit_id>', methods=['DELETE'])
-def delete_habit(habit_id):
-    data = read_data()
-    habit_to_delete = next((habit for habit in data["habits"] if habit["id"] == habit_id), None)
+        for habit in data["habits"]:
+            if habit["id"] == habit_id:
+                updated_habit.pop("user_email")
+                habit.update(updated_habit)
+                DBService.write_data(data)
+                return jsonify(habit), 200
 
-    if not habit_to_delete:
         return jsonify({"error": "Habit not found"}), 404
+    except Exception as e:
+        logger.error(f"Error while updating habit: {e}")
+        return jsonify({"error": "Unable to update habit"}), 400
 
-    data["habits"] = [habit for habit in data["habits"] if habit["id"] != habit_id]
-    write_data(data)
-    return jsonify(habit_to_delete), 200
+
+@habits.route('/<int:habit_id>', methods=['DELETE'])
+def delete_habit(habit_id):
+    try:
+        logger.info("Deteling habit")
+        data = DBService.read_data()
+        habit_to_delete = next((habit for habit in data["habits"] if habit["id"] == habit_id), None)
+
+        if not habit_to_delete:
+            return jsonify({"error": "Habit not found"}), 404
+
+        data["habits"] = [habit for habit in data["habits"] if habit["id"] != habit_id]
+        DBService.write_data(data)
+
+        return jsonify(habit_to_delete), 200
+    except Exception as e:
+        logger.error(f"Error while deleting habit: {e}")
+        return jsonify({"error": "Unable to delete habit"}), 400
 
 
-# Endpoint para marcar un hábito como completado en una fecha específica
-@habits_bp.route('/<int:habit_id>/track', methods=['POST'])
+@habits.route('/<int:habit_id>/track', methods=['POST'])
 def track_habit(habit_id):
-    req = request.get_json()
-    user_email = req.get("user_email")
-    tracked_date = req.get("date", datetime.today().strftime('%Y-%m-%d'))  # Opcional, si no se envía toma la fecha actual
+    try:
+        logger.info("Tracking habit")
+        req = request.get_json()
 
-    if not user_email:
-        return jsonify({"error": "Missing user_email"}), 400
+        user_email = req.get("user_email")
+        tracked_date = req.get(
+            "date",
+            datetime.today().strftime('%Y-%m-%d')
+        )
 
-    data = read_data()
-    # Verificamos si el hábito pertenece a ese usuario
-    habit_exists = any(h for h in data["habits"] if h["id"] == habit_id and h["user_email"] == user_email)
-    if not habit_exists:
-        return jsonify({"error": "Habit not found for user"}), 404
+        if not user_email:
+            return jsonify({"error": "Missing user_email"}), 400
 
-    data["tracking"].append({"habit_id": habit_id, "user_email": user_email, "date": tracked_date})
-    write_data(data)
-    return jsonify(data["tracking"]), 200
+        data = DBService.read_data()
+        # Validates the habits corresponds to the user received
+        habit_exists = any(h for h in data["habits"] if h["id"] == habit_id and h["user_email"] == user_email)
+
+        if not habit_exists:
+            return jsonify({"error": "Habit not found for user"}), 404
+
+        data["tracking"].append({"habit_id": habit_id, "user_email": user_email, "date": tracked_date})
+        DBService.write_data(data)
+
+        return jsonify(data["tracking"]), 200
+    except Exception as e:
+        logger.error(f"Error while tracking habit: {e}")
+        return jsonify({"error": "Unable to track habit"}), 400
 
 
-# Endpoint para obtener el reporte semanal de hábitos
-@habits_bp.route('/report', methods=['GET'])
+@habits.route('/report', methods=['GET'])
 def weekly_report():
-    user_email = request.args.get('user_email')
-    if not user_email:
-        return jsonify({"error": "Missing user_email"}), 400
+    try:
+        logger.info("Getting habits weekly report")
+        user_email = request.args.get('user_email')
 
-    data = read_data()
-    report = {}
-    user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
+        if not user_email:
+            return jsonify({"error": "Missing user_email"}), 400
 
-    for habit in user_habits:
-        count = sum(1 for t in data["tracking"] if t["habit_id"] == habit["id"] and t["user_email"] == user_email)
-        report[habit["name"]] = count
+        data = DBService.read_data()
+        report = {}
+        user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
 
-    return jsonify(report), 200
+        for habit in user_habits:
+            count = sum(1 for t in data["tracking"] if t["habit_id"] == habit["id"] and t["user_email"] == user_email)
+            report[habit["name"]] = count
+
+        return jsonify(report), 200
+    except Exception as e:
+        logger.error(f"Error while getting habits report: {e}")
+        return jsonify({"error": "Unable to get habits report"}), 400

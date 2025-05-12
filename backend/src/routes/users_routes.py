@@ -1,62 +1,59 @@
 from flask import Blueprint, request, jsonify
-import json
-import os
 
-users_bp = Blueprint('users', __name__)
-DATA_PATH = os.path.join("src", "database", "data.json")
+from src.services.db_service import DBService
 
+from utils.logger import logger
 
-def load_data():
-    if not os.path.exists(DATA_PATH):
-        return {"users": [], "habits": [], "tracking": []}
-    with open(DATA_PATH, "r") as f:
-        return json.load(f)
+users = Blueprint('users', __name__)
 
 
-def save_data(data):
-    with open(DATA_PATH, "w") as f:
-        json.dump(data, f, indent=4)
-
-
-@users_bp.route('/register', methods=['POST'])
+@users.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
+    try:
+        logger.info("User registration in progress")
+        data = request.get_json()
 
-    if not name or not email or not password:
-        return jsonify({"error": "Nombre, email y contraseña son requeridos"}), 400
+        new_user = {
+            "name": data.get("name", None),
+            "email": data.get("email", None),
+            "password": data.get("password", None)
+        }
 
-    db = load_data()
-    if any(user["email"] == email for user in db["users"]):
-        return jsonify({"error": "El email ya está registrado"}), 409
+        if not new_user["name"] or not new_user["email"] or not new_user["password"]:
+            return jsonify({"error": "Nombre, email y contraseña son requeridos"}), 400
 
-    new_user = {
-        "name": name,
-        "email": email,
-        "password": password
-    }
+        db = DBService.load_data()
+        if any(user["email"] == new_user["email"] for user in db["users"]):
+            return jsonify({"error": "El email ya está registrado"}), 409
 
-    db["users"].append(new_user)
-    save_data(db)
+        db["users"].append(new_user)
+        DBService.save_data(db)
 
-    return jsonify(data), 201
+        return jsonify(data), 201
+    except Exception as e:
+        logger.error(f"Error while registering user: {e}")
+        return jsonify({"error": "No se pudo registrar al usuario"}), 400
 
 
-@users_bp.route('/login', methods=['POST'])
+@users.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+    try:
+        logger.info("User login in progress")
+        data = request.get_json()
 
-    if not email or not password:
-        return jsonify({"error": "Email y contraseña son requeridos"}), 400
+        email = data.get("email", None)
+        password = data.get("password", None)
 
-    db = load_data()
-    user = next((u for u in db["users"] if u["email"] == email and u["password"] == password), None)
+        if not email or not password:
+            return jsonify({"error": "Email y contraseña son requeridos"}), 400
 
-    if not user:
-        return jsonify({"error": "Credenciales inválidas"}), 401
+        db = DBService.load_data()
+        user = next((u for u in db["users"] if u["email"] == email and u["password"] == password), None)
 
-    return jsonify({"name": user["name"], "email": user["email"]}), 200
+        if not user:
+            return jsonify({"error": "Credenciales inválidas"}), 401
+
+        return jsonify({"name": user["name"], "email": user["email"]}), 200
+    except Exception as e:
+        logger.error(f"Error while loging in: {e}")
+        return jsonify({"error": "No se pudo iniciar sesión"}), 400
