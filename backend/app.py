@@ -1,12 +1,12 @@
 from flask import Flask
-from src.routes.habits_routes import habits_bp
-from src.routes.users_routes import users_bp
+from src.routes.habits_routes import habits
+from src.routes.users_routes import users
 
 app = Flask(__name__)
 
 # Registro del blueprint para las rutas de hábitos
-app.register_blueprint(habits_bp, url_prefix="/api/habits")
-app.register_blueprint(users_bp, url_prefix="/api/users")
+app.register_blueprint(habits, url_prefix="/api/habits")
+app.register_blueprint(users, url_prefix="/api/users")
 
 
 # Ruta de salud para verificar si la API está activa

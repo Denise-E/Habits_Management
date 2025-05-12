@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 
 from src.services.db_service import DBService
-
 from utils.logger import logger
 
 users = Blueprint('users', __name__)
