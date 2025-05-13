@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime, date
 
+from flask_cors import cross_origin
+
 from src.services.db_service import DBService
 from utils.logger import logger
 
@@ -9,6 +11,7 @@ habits = Blueprint('habits', __name__)
 
 
 @habits.route('/', methods=['GET'])
+@cross_origin()
 def get_habits():
     try:
         logger.info("Getting user habits")
@@ -27,6 +30,7 @@ def get_habits():
 
 
 @habits.route('/', methods=['POST'])
+@cross_origin()
 def create_habit():
     try:
         logger.info("Creating habit")
@@ -49,6 +53,7 @@ def create_habit():
 
 
 @habits.route('/<int:habit_id>', methods=['PUT'])
+@cross_origin()
 def update_habit(habit_id):
     try:
         logger.info("Updating habit")
@@ -70,6 +75,7 @@ def update_habit(habit_id):
 
 
 @habits.route('/<int:habit_id>', methods=['DELETE'])
+@cross_origin()
 def delete_habit(habit_id):
     try:
         logger.info("Deteling habit")
@@ -89,6 +95,7 @@ def delete_habit(habit_id):
 
 
 @habits.route('/<int:habit_id>/track', methods=['POST'])
+@cross_origin()
 def track_habit(habit_id):
     try:
         logger.info("Tracking habit")
@@ -120,6 +127,7 @@ def track_habit(habit_id):
 
 
 @habits.route('/report', methods=['GET'])
+@cross_origin()
 def weekly_report():
     try:
         logger.info("Getting habits weekly report")

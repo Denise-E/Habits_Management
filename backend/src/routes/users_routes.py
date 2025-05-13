@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import cross_origin
 
 from src.services.db_service import DBService
 from utils.logger import logger
@@ -7,6 +8,7 @@ users = Blueprint('users', __name__)
 
 
 @users.route('/register', methods=['POST'])
+@cross_origin()
 def register():
     try:
         logger.info("User registration in progress")
@@ -35,6 +37,7 @@ def register():
 
 
 @users.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     try:
         logger.info("User login in progress")

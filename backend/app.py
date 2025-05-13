@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import cross_origin
 from src.routes.habits_routes import habits
 from src.routes.users_routes import users
 
@@ -11,6 +12,7 @@ app.register_blueprint(users, url_prefix="/api/users")
 
 # Ruta de salud para verificar si la API está activa
 @app.route("/api/health", methods=['GET'])
+@cross_origin()
 def health():
     return {"msg": "OK"}, 200
 
