@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habits Tracker</title>
+</head>
+<body>
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #e0f5e9;">
+    <div style="font-size: 1.5rem; font-weight: bold;">Habit Tracker</div>
+
+    <nav style="display: flex; gap: 1rem;">
+        <a href="home.html">Home</a>
+        <a href="tracking.html">Hábitos</a>
+    </nav>
+
+    <div style="display: flex; gap: 1rem;">
+        <a href="profile.html">Perfil</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </div>
+    </header>
+
+
+  <main style="padding: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 id="userNameDisplay"></h2>
+      <a href="add_habit.html" class="button">Agregar</a>
+    </div>
+
+    <ul id="habitList" style="list-style: none; padding: 0; margin-top: 2rem;"></ul>
+  </main>
+
+  <script src="../js/common.js"></script>
+  <script src="../js/tracking.js"></script>
+</body>
+</html>

@@ -4,6 +4,11 @@
             "name": "Denise Prueba",
             "email": "denise@gmail.com",
             "password": "123456"
+        },
+        {
+            "name": "Prueba Registro",
+            "email": "prueba@gmail.com",
+            "password": "123456"
         }
     ],
     "habits": [
