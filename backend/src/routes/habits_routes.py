@@ -42,7 +42,7 @@ def create_habit():
         new_habit['created_at'] = date.today().isoformat()
 
         data["habits"].append(new_habit)
-        DBService.write_data(data)
+        DBService.save_data(data)
 
         return jsonify(new_habit), 201
     except Exception as e:
@@ -63,7 +63,7 @@ def update_habit(habit_id):
             if habit["id"] == habit_id:
                 updated_habit.pop("user_email")
                 habit.update(updated_habit)
-                DBService.write_data(data)
+                DBService.save_data(data)
                 return jsonify(habit), 200
 
         return jsonify({"error": "Habit not found"}), 404
@@ -84,7 +84,7 @@ def delete_habit(habit_id):
             return jsonify({"error": "Habit not found"}), 404
 
         data["habits"] = [habit for habit in data["habits"] if habit["id"] != habit_id]
-        DBService.write_data(data)
+        DBService.save_data(data)
 
         return jsonify(habit_to_delete), 200
     except Exception as e:
@@ -116,7 +116,7 @@ def track_habit(habit_id):
             return jsonify({"error": "Habit not found for user"}), 404
 
         data["tracking"].append({"habit_id": habit_id, "user_email": user_email, "date": tracked_date})
-        DBService.write_data(data)
+        DBService.save_data(data)
 
         return jsonify(data["tracking"]), 200
     except Exception as e:

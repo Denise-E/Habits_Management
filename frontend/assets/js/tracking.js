@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   const userEmail = sessionStorage.getItem('userEmail');
-  const userName = sessionStorage.getItem('userName');
-  document.getElementById('userNameDisplay').textContent = `${userName}`;
 
   fetch(`http://localhost:5000/api/habits/${userEmail}`)
     .then(res => res.json())
@@ -25,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function deleteHabit(habitId) {
+  console.log("Habit ID", habitId)
   fetch(`http://localhost:5000/api/habits/${habitId}`, { method: 'DELETE' })
     .then(() => location.reload());
 }

@@ -30,3 +30,4 @@ class DBService:
         except Exception as e:
             print(f"Error reading data file: {e}")
             return {"users": [], "habits": [], "tracking": []}
+        

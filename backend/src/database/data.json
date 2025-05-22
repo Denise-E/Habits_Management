@@ -11,19 +11,7 @@
             "password": "123456"
         }
     ],
-    "habits": [
-        {
-            "name": "Leer al menos 30 minutos",
-            "description": "Lectura para desconectarme y aprender",
-            "user_email": "denise@gmail.com",
-            "id": 1
-        },
-        {
-            "name": "Tomer 2L de agua a diario",
-            "user_email": "denise@gmail.com",
-            "id": 2
-        }
-    ],
+    "habits": [],
     "tracking": [
         {
             "habit_id": 1,
