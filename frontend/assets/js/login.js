@@ -28,7 +28,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
       document.getElementById('login-form').appendChild(errorMsg);
     } else {
       // Redirigir al home
-      window.location.href = './presentation/reports.html';
+      window.location.href = './assets/presentation/reports.html';
     }
   } catch (error) {
     const errorMsg = document.createElement('p');
