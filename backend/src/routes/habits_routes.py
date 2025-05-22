@@ -10,13 +10,11 @@ from utils.logger import logger
 habits = Blueprint('habits', __name__)
 
 
-@habits.route('/', methods=['GET'])
+@habits.route('/<user_email>', methods=['GET'])
 @cross_origin()
-def get_habits():
+def get_habits(user_email):
     try:
         logger.info("Getting user habits")
-        user_email = request.args.get('user_email')
-
         if not user_email:
             return jsonify({"error": "Missing user_email"}), 400
 

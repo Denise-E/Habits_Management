@@ -1,9 +1,10 @@
 from flask import Flask
-from flask_cors import cross_origin
+from flask_cors import CORS, cross_origin
 from src.routes.habits_routes import habits
 from src.routes.users_routes import users
 
 app = Flask(__name__)
+CORS(app)
 
 # Registro del blueprint para las rutas de hábitos
 app.register_blueprint(habits, url_prefix="/api/habits")

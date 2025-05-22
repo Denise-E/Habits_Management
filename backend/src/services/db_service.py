@@ -21,3 +21,12 @@ class DBService:
         logger.info("Saving new data")
         with open(DATA_PATH, "w") as f:
             json.dump(data, f, indent=4)
+
+    @staticmethod
+    def read_data():
+        try:
+            with open(DATA_PATH, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error reading data file: {e}")
+            return {"users": [], "habits": [], "tracking": []}

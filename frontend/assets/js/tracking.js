@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const userName = sessionStorage.getItem('userName');
   document.getElementById('userNameDisplay').textContent = `${userName}`;
 
-  fetch(`http://localhost:5000/api/habits?user_email=${userEmail}`)
+  fetch(`http://localhost:5000/api/habits/${userEmail}`)
     .then(res => res.json())
     .then(habits => {
+      console.log("Habits found:", habits)
       const list = document.getElementById('habitList');
       list.innerHTML = '';
       habits.forEach(habit => {
