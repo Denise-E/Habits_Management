@@ -27,7 +27,7 @@ def get_habits(user_email):
         return jsonify({"error": "Unable to get the information"}), 400
 
 
-@habits.route('/', methods=['POST'])
+@habits.route('', methods=['POST'])
 @cross_origin()
 def create_habit():
     try:

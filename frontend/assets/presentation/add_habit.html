@@ -6,6 +6,7 @@
   <title>Habits Tracker</title>
   
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/forms.css" />
 </head>
 <body>
   <header class="main-header">
@@ -22,10 +23,26 @@
     </div>
   </header>
 
-  <main style="padding: 2rem;">
-    <h1>Habits Creation Page</h1>
+  <main class="form-container">
+    <h1>Crear nuevo hábito</h1>
+    <form id="habitForm">
+      <label for="name">Nombre del hábito:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="description">Descripción (opcional):</label>
+      <input type="text" id="description" name="description" />
+
+      <label for="category">Categoría:</label>
+      <input type="text" id="category" name="category" required />
+
+      <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
+      <input type="text" id="goal" name="goal" required />
+
+      <button type="submit">Guardar hábito</button>
+    </form>
   </main>
 
   <script src="../js/common.js"></script>
+  <script src="../js/habits.js"></script>
 </body>
 </html>
