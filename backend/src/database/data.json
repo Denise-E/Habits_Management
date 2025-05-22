@@ -13,12 +13,13 @@
     ],
     "habits": [
         {
-            "name": "Leer 10 minutos al d\u00eda",
-            "category": "Recreativo",
-            "goal": "30 minutos al d\u00eda",
+            "name": "\u00a1Hidratarme!",
+            "category": "Salud",
+            "goal": "Diaria",
             "user_email": "denise@gmail.com",
             "id": 1,
-            "created_at": "2025-05-22"
+            "created_at": "2025-05-22",
+            "description": "Tomar 2L de agua al d\u00eda"
         },
         {
             "name": "Leer 10 minutos al d\u00eda",
@@ -26,6 +27,15 @@
             "goal": "30 minutos al d\u00eda",
             "user_email": "denise@gmail.com",
             "id": 2,
+            "created_at": "2025-05-22"
+        },
+        {
+            "name": "Meditaci\u00f3n",
+            "description": "Dedicarme un rato para meditar al d\u00eda para calmar mi sistema nervioso",
+            "category": "Mente",
+            "goal": "1 vez al d\u00eda",
+            "user_email": "denise@gmail.com",
+            "id": 3,
             "created_at": "2025-05-22"
         }
     ],

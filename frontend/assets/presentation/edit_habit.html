@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Habits Tracker</title>
+  
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/forms.css" />
+</head>
+<body>
+<header class="main-header">
+    <div class="header-left">
+      <h1>Habit Tracker</h1>
+    </div>
+    <nav class="header-center">
+      <a href="../presentation/reports.html">Inicio</a>
+      <a href="tracking.html">Hábitos</a>
+    </nav>
+    <div class="header-right">
+      <a href="profile.html">Perfil</a>
+      <button id="logoutButton">Logout</button>
+    </div>
+  </header>
+
+  <main class="form-container">
+    <h1>Editar hábito</h1>
+    <form id="habitForm">
+      <label for="name">Nombre del hábito:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="description">Descripción (opcional):</label>
+      <input type="text" id="description" name="description" />
+
+      <label for="category">Categoría:</label>
+      <input type="text" id="category" name="category" required />
+
+      <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
+      <input type="text" id="goal" name="goal" required />
+
+      <button type="submit">Actualizar hábito</button>
+    </form>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/habits.js"></script>
+  </main>
+</body>
+</html>

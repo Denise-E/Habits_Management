@@ -1,39 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('habitForm');
+  if (!form) return;
 
-  form.addEventListener('submit', async (e) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const habitId = urlParams.get('id'); 
+  const userEmail = sessionStorage.getItem('userEmail');
+
+  // Si estamos editando, obtenemos los datos del hábito
+  if (habitId) {
+    fetch(`http://localhost:5000/api/habits/${habitId}`)
+      .then(res => res.json())
+      .then(habit => {
+        if (habit.error) throw new Error(habit.error);
+        document.getElementById('name').value = habit.name;
+        document.getElementById('description').value = habit.description || '';
+        document.getElementById('category').value = habit.category;
+        document.getElementById('goal').value = habit.goal;
+      });
+  }
+
+  form.addEventListener('submit', e => {
     e.preventDefault();
 
-    const name = document.getElementById('name').value.trim();
-    const description = document.getElementById('description').value.trim();
-    const category = document.getElementById('category').value.trim();
-    const goal = document.getElementById('goal').value.trim();
-    const user_email = sessionStorage.getItem('userEmail');
+    const habit = {
+      name: document.getElementById('name').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      category: document.getElementById('category').value.trim(),
+      goal: document.getElementById('goal').value.trim(),
+      user_email: userEmail,
+    };
 
-    if (!name || !category || !goal || !user_email) {
-      alert("Todos los campos son obligatorios.");
-      return;
-    }
-
-    const newHabit = { name, category, goal, user_email };
-
-    try {
-      const response = await fetch('http://localhost:5000/api/habits', {
+    if (habitId) {
+      fetch(`http://localhost:5000/api/habits/${habitId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(habit)
+      }).then(() => window.location.href = 'reports.html');
+    } else {
+      fetch('http://localhost:5000/api/habits', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newHabit)
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al guardar el hábito');
-      }
-
-      window.location.href = 'reports.html';
-    } catch (error) {
-      alert("Ocurrió un error al guardar el hábito.");
-      console.error(error);
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(habit)
+      }).then(() => window.location.href = 'reports.html');
     }
   });
 });

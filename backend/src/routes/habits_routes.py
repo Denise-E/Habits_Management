@@ -26,6 +26,20 @@ def get_habits(user_email):
         logger.error(f"Error while getting habits: {e}")
         return jsonify({"error": "Unable to get the information"}), 400
 
+@habits.route('/<int:habit_id>', methods=['GET'])
+@cross_origin()
+def get_habit_by_id(habit_id):
+    try:
+        logger.info("Getting habit by ID")
+        data = DBService.read_data()
+        habit = next((h for h in data["habits"] if h["id"] == habit_id), None)
+        if not habit:
+            return jsonify({"error": "Habit not found"}), 404
+        return jsonify(habit), 200
+    except Exception as e:
+        logger.error(f"Error getting habit by ID: {e}")
+        return jsonify({"error": "Unable to fetch habit"}), 400
+
 
 @habits.route('', methods=['POST'])
 @cross_origin()
