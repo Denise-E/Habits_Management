@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function logout() {
+  console.log("Logging out")
   sessionStorage.clear();
   window.location.href = '../../index.html';
 }
