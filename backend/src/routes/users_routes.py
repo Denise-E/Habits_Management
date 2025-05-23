@@ -59,3 +59,78 @@ def login():
     except Exception as e:
         logger.error(f"Error while loging in: {e}")
         return jsonify({"error": "No se pudo iniciar sesión"}), 400
+
+@users.route('/detail', methods=['POST'])
+@cross_origin()
+def get_user():
+    try:
+        data = request.get_json()
+        email = data.get("email", None)
+
+        if not email:
+            return jsonify({"error": "Email requerido"}), 400
+
+        db = DBService.load_data()
+        user = next((u for u in db["users"] if u["email"] == email), None)
+
+        if not user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+
+        print(f"User: {user}")
+        return jsonify({"name": user["name"], "email": user["email"]}), 200
+    except Exception as e:
+        logger.error(f"Error al obtener usuario: {e}")
+        return jsonify({"error": "No se pudo obtener el usuario"}), 400
+
+@users.route('', methods=['PUT'])
+@cross_origin()
+def update_user():
+    try:
+        data = request.get_json()
+        email = data.get("email", None)
+        name = data.get("name", None)
+        phone = data.get("phone", None)
+
+        if not email:
+            return jsonify({"error": "Email requerido"}), 400
+
+        db = DBService.load_data()
+        user = next((u for u in db["users"] if u["email"] == email), None)
+
+        if not user:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+
+        if name is not None:
+            user["name"] = name
+        if phone is not None:
+            user["phone"] = phone
+
+        DBService.save_data(db)
+        return jsonify({"message": "Usuario actualizado correctamente"}), 200
+    except Exception as e:
+        logger.error(f"Error al actualizar usuario: {e}")
+        return jsonify({"error": "No se pudo actualizar el usuario"}), 400
+
+@users.route('', methods=['DELETE'])
+@cross_origin()
+def delete_user():
+    try:
+        data = request.get_json()
+        email = data.get("email", None)
+
+        if not email:
+            return jsonify({"error": "Email requerido"}), 400
+
+        db = DBService.load_data()
+        user_index = next((i for i, u in enumerate(db["users"]) if u["email"] == email), None)
+
+        if user_index is None:
+            return jsonify({"error": "Usuario no encontrado"}), 404
+
+        db["users"].pop(user_index)
+        DBService.save_data(db)
+
+        return jsonify({"message": "Usuario eliminado correctamente"}), 200
+    except Exception as e:
+        logger.error(f"Error al eliminar usuario: {e}")
+        return jsonify({"error": "No se pudo eliminar el usuario"}), 400
