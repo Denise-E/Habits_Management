@@ -1,16 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const headerContainer = document.getElementById('header');
-  if (headerContainer) {
-    fetch('partials/header.html')
-      .then(res => res.text())
-      .then(html => {
-        headerContainer.innerHTML = html;
-      });
+  const logoutButton = document.getElementById('logoutButton');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', logout);
   }
 });
 
 function logout() {
-  console.log("Logging out")
+  console.log("Logging out");
   sessionStorage.clear();
   window.location.href = '../../index.html';
 }
