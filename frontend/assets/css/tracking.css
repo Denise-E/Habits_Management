@@ -103,3 +103,68 @@
     height: 16px;
   }
 }
+
+
+.statistics-section {
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 2px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.statistics-section h2 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.filter-dates {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filter-dates label {
+  font-weight: 600;
+  color: #555;
+}
+
+.filter-dates input[type="date"] {
+  padding: 5px 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-dates button {
+  padding: 6px 14px;
+  font-size: 1rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.filter-dates button:hover {
+  background-color: #115293;
+}
+
+#statsResult table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#statsResult th, #statsResult td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#statsResult th {
+  background-color: #1976d2;
+  color: white;
+}
