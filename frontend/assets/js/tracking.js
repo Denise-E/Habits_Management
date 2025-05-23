@@ -209,4 +209,104 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Función para actualizar estadísticas
+  function loadStats(fromDate, toDate) {
+    fetch('http://localhost:5000/api/tracking/detail', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: fromDate, to: toDate })
+    })
+    .then(res => res.json())
+    .then(data => {
+      const { habits, tracking } = data;
+      const diffDays = (new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24) + 1;
+
+      const rowsHtml = habits.map(habit => {
+        const completions = tracking.filter(t => t.habit_id === habit.id).length;
+        const percent = ((completions / diffDays) * 100).toFixed(1);
+        return `
+          <tr>
+            <td>${habit.name}</td>
+            <td>${completions}</td>
+            <td>${percent}%</td>
+          </tr>
+        `;
+      }).join('');
+
+      statsResult.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Hábito</th>
+              <th>Veces completado</th>
+              <th>Porcentaje cumplimiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      `;
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Ocurrió un error al cargar las estadísticas');
+    });
+  }
+
+  if (startDateInput && endDateInput && loadStatsButton && statsResult) {
+    // Valores iniciales
+    const todayStr = formatDate(new Date());
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const weekAgoStr = formatDate(weekAgo);
+
+    startDateInput.value = weekAgoStr;
+    endDateInput.value = todayStr;
+
+    loadStatsButton.addEventListener('click', () => {
+      const fromDate = startDateInput.value;
+      const toDate = endDateInput.value;
+
+      if (!fromDate || !toDate || fromDate > toDate) {
+        alert('Por favor seleccioná un rango de fechas válido.');
+        return;
+      }
+
+      loadStats(fromDate, toDate);
+    });
+  }
+
+  function handleCheckboxChange(event) {
+    const checkbox = event.target;
+    const habitId = parseInt(checkbox.dataset.habitId);
+    const date = checkbox.dataset.date;
+
+    const payload = {
+      habit_id: habitId,
+      date: date
+    };
+
+    const fetchOptions = {
+      method: checkbox.checked ? 'POST' : 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    };
+
+    fetch('http://localhost:5000/api/tracking', fetchOptions)
+      .then(() => {
+        // Actualizar estadísticas si la sección está visible y tiene fechas válidas
+        if (
+          statsResult && statsResult.innerHTML.trim() !== '' &&
+          startDateInput && endDateInput &&
+          startDateInput.value && endDateInput.value &&
+          startDateInput.value <= endDateInput.value
+        ) {
+          loadStats(startDateInput.value, endDateInput.value);
+        }
+      })
+      .catch(err => console.error('Error al actualizar tracking:', err));
+  }
+
 });
