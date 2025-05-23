@@ -9,12 +9,13 @@ from utils.logger import logger
 
 tracker = Blueprint('tracker', __name__)
 
-@tracker.route('', methods=['GET'])
+@tracker.route('/detail', methods=['POST'])
 @cross_origin()
 def get_tracking():
     try:
-        from_date = request.args.get('from')[:10]
-        to_date = request.args.get('to')[:10]
+        data = request.get_json()
+        from_date = data.get('from')
+        to_date = data.get('to')
         data = DBService.read_data()
 
         tracking = [t for t in data["tracking"] if from_date <= t["date"] <= to_date]
@@ -55,8 +56,9 @@ def post_tracking():
 @cross_origin()
 def delete_tracking():
     try:
-        habit_id = int(request.args.get("habit_id"))
-        date = request.args.get("date")[:10]
+        input_data = request.get_json()
+        habit_id = input_data['habit_id']
+        date = input_data['date']
         data = DBService.read_data()
 
         data["tracking"] = [t for t in data["tracking"] if not (t["habit_id"] == habit_id and t["date"] == date)]

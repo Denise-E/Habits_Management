@@ -24,15 +24,30 @@
     </div>
   </header>
 
-  <main class="tracking-container">
-    <div class="week-navigation">
-      <button id="prevWeek">&#9664;</button>
-      <h2 id="weekRange"></h2>
-      <button id="nextWeek">&#9654;</button>
-    </div>
-    <table id="trackingTable">
-    </table>
-  </main>
+    <main class="tracking-container">
+      <h1>Seguimiento de hábitos</h1>
+
+      <!-- Selector de semana -->
+      <div class="week-navigation">
+        <button id="prevWeek">← Semana anterior</button>
+        <span id="currentWeekLabel"></span>
+        <button id="nextWeek">Semana siguiente →</button>
+      </div>
+
+      <!-- Tabla de seguimiento -->
+      <table id="trackingTable" class="tracking-table">
+        <thead>
+          <tr id="weekDaysRow">
+            <th>Hábito</th>
+            <!-- Aquí se insertan las fechas: lun, mar, ... -->
+          </tr>
+        </thead>
+        <tbody id="habitRows">
+          <!-- Aquí se insertan las filas de hábitos con sus checkboxes -->
+        </tbody>
+      </table>
+    </main>
+
 
   <footer class="footer">
     <p>&copy; 2025 Denise Eichenblat | TP Integrador Arquitectura Web 2025</p>

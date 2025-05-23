@@ -64,6 +64,10 @@
             "habit_id": 1,
             "user_email": "denise@gmail.com",
             "date": "2025-05-07"
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-19"
         }
     ]
 }
