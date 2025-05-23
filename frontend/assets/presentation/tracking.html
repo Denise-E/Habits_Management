@@ -6,6 +6,7 @@
   <title>Habits Tracker</title>
   
   <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/tracking.css" />
   <link rel="stylesheet" href="../css/footer.css" />
 </head>
 <body>
@@ -23,8 +24,14 @@
     </div>
   </header>
 
-  <main style="padding: 2rem;">
-    <h1>Tracking Page</h1>
+  <main class="tracking-container">
+    <div class="week-navigation">
+      <button id="prevWeek">&#9664;</button>
+      <h2 id="weekRange"></h2>
+      <button id="nextWeek">&#9654;</button>
+    </div>
+    <table id="trackingTable">
+    </table>
   </main>
 
   <footer class="footer">
@@ -32,5 +39,6 @@
   </footer>
 
   <script src="../js/common.js"></script>
+  <script src="../js/tracking.js"></script>
 </body>
 </html>

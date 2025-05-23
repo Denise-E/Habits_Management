@@ -1,0 +1,51 @@
+/* tracking.css */
+
+.tracking-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.week-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#trackingTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#trackingTable th,
+#trackingTable td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#trackingTable th {
+  background-color: #f2f2f2;
+}
+
+.checkbox-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  appearance: none;
+  border: 2px solid #555;
+  cursor: pointer;
+}
+
+.checkbox-circle:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f8f8f8;
+}
