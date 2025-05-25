@@ -3,7 +3,8 @@
         {
             "name": "Denise Prueba",
             "email": "denise@gmail.com",
-            "password": "123456"
+            "password": "123456",
+            "phone": "1145457777"
         },
         {
             "name": "Prueba Registro",
