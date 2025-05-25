@@ -8,41 +8,47 @@
   
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/forms.css" />
+  <link rel="stylesheet" href="../css/footer.css" />
 </head>
 <body>
-  <header class="main-header">
-    <div class="header-left">
-      <h1>Habit Tracker</h1>
-    </div>
-    <nav class="header-center">
-      <a href="../presentation/reports.html">Inicio</a>
-      <a href="tracking.html">Hábitos</a>
-    </nav>
-    <div class="header-right">
-      <a href="profile.html">Perfil</a>
-      <button id="logoutButton">Cerrar Sesión</button>
-    </div>
-  </header>
+  <div class="wrapper">
+    <header class="main-header">
+      <div class="header-left">
+        <h1>Habit Tracker</h1>
+      </div>
+      <nav class="header-center">
+        <a href="../presentation/reports.html">Inicio</a>
+        <a href="tracking.html">Hábitos</a>
+      </nav>
+      <div class="header-right">
+        <a href="profile.html">Perfil</a>
+        <button id="logoutButton">Cerrar Sesión</button>
+      </div>
+    </header>
 
-  <main class="form-container">
-    <h1>Crear nuevo hábito</h1>
-    <form id="habitForm">
-      <label for="name">Nombre del hábito:</label>
-      <input type="text" id="name" name="name" required />
+    <main class="form-container">
+      <h1>Crear nuevo hábito</h1>
+      <form id="habitForm">
+        <label for="name">Nombre del hábito:</label>
+        <input type="text" id="name" name="name" required />
 
-      <label for="description">Descripción (opcional):</label>
-      <input type="text" id="description" name="description" />
+        <label for="description">Descripción (opcional):</label>
+        <input type="text" id="description" name="description" />
 
-      <label for="category">Categoría:</label>
-      <input type="text" id="category" name="category" required />
+        <label for="category">Categoría:</label>
+        <input type="text" id="category" name="category" required />
 
-      <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
-      <input type="text" id="goal" name="goal" required />
+        <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
+        <input type="text" id="goal" name="goal" required />
 
-      <button type="submit">Guardar hábito</button>
-    </form>
-  </main>
-
+        <button type="submit">Guardar hábito</button>
+      </form>
+    </main>
+    
+    <footer class="footer">
+      <p>&copy; 2025 Denise Eichenblat | TP Integrador Arquitectura Web 2025</p>
+    </footer>
+  </div>
   <script src="../js/common.js"></script>
   <script src="../js/habits.js"></script>
 </body>

@@ -1,16 +1,21 @@
-.footer {
-  background-color: #f8f8f8;
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #555;
-  border-top: 1px solid #ddd;
-  margin-top: 2rem;
+/* En tu archivo general o profile.css si es específico */
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
-@media (max-width: 600px) {
-  .footer {
-    font-size: 0.8rem;
-    padding: 0.8rem;
-  }
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
 }

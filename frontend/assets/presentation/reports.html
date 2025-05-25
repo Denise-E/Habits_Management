@@ -10,32 +10,34 @@
   <link rel="stylesheet" href="../css/footer.css" />
 </head>
 <body>
-  <header class="main-header">
-    <div class="header-left">
-      <h1>Habit Tracker</h1>
-    </div>
-    <nav class="header-center">
-      <a href="../presentation/reports.html">Inicio</a>
-      <a href="tracking.html">Hábitos</a>
-    </nav>
-    <div class="header-right">
-      <a href="profile.html">Perfil</a>
-      <button id="logoutButton">Cerrar Sesión</button>
-    </div>
-  </header>
+  <div class="wrapper">
+    <header class="main-header">
+      <div class="header-left">
+        <h1>Habit Tracker</h1>
+      </div>
+      <nav class="header-center">
+        <a href="../presentation/reports.html">Inicio</a>
+        <a href="tracking.html">Hábitos</a>
+      </nav>
+      <div class="header-right">
+        <a href="profile.html">Perfil</a>
+        <button id="logoutButton">Cerrar Sesión</button>
+      </div>
+    </header>
 
-  <main style="padding: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <h2 id="userNameDisplay">Mis hábitos</h2>
-      <a href="add_habit.html" class="button">Agregar</a>
-    </div>
+    <main style="padding: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 id="userNameDisplay">Mis hábitos</h2>
+        <a href="add_habit.html" class="button">Agregar</a>
+      </div>
 
-    <ul id="habitList" style="list-style: none; padding: 0; margin-top: 2rem;"></ul>
-  </main>
+      <ul id="habitList" style="list-style: none; padding: 0; margin-top: 2rem;"></ul>
+    </main>
 
-  <footer class="footer">
-    <p>&copy; 2025 Denise Eichenblat | TP Integrador Arquitectura Web 2025</p>
-  </footer>
+    <footer class="footer">
+      <p>&copy; 2025 Denise Eichenblat | TP Integrador Arquitectura Web 2025</p>
+    </footer>
+  </div>
   <script src="../js/common.js"></script>
   <script src="../js/reports.js"></script>
 </body>

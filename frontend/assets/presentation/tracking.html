@@ -11,68 +11,68 @@
   <link rel="stylesheet" href="../css/footer.css" />
 </head>
 <body>
-  <header class="main-header">
-    <div class="header-left">
-      <h1>Habit Tracker</h1>
-    </div>
-    <nav class="header-center">
-      <a href="../presentation/reports.html">Inicio</a>
-      <a href="tracking.html">Hábitos</a>
-    </nav>
-    <div class="header-right">
-      <a href="profile.html">Perfil</a>
-      <button id="logoutButton">Cerrar Sesión</button>
-    </div>
-  </header>
+  <div class="wrapper">
+    <header class="main-header">
+      <div class="header-left">
+        <h1>Habit Tracker</h1>
+      </div>
+      <nav class="header-center">
+        <a href="../presentation/reports.html">Inicio</a>
+        <a href="tracking.html">Hábitos</a>
+      </nav>
+      <div class="header-right">
+        <a href="profile.html">Perfil</a>
+        <button id="logoutButton">Cerrar Sesión</button>
+      </div>
+    </header>
 
     <main class="tracking-container">
-      <h1>Seguimiento de hábitos</h1>
+        <h1>Seguimiento de hábitos</h1>
 
-      <!-- Selector de semana -->
-      <div class="week-navigation">
-        <button id="prevWeek">← Semana anterior</button>
-        <span id="currentWeekLabel"></span>
-        <button id="nextWeek">Semana siguiente →</button>
-      </div>
-
-      <!-- Tabla de seguimiento -->
-      <table id="trackingTable" class="tracking-table">
-        <thead>
-          <tr id="weekDaysRow">
-            <th>Hábito</th>
-            <!-- Aquí se insertan las fechas: lun, mar, ... -->
-          </tr>
-        </thead>
-        <tbody id="habitRows">
-          <!-- Aquí se insertan las filas de hábitos con sus checkboxes -->
-        </tbody>
-      </table>
-
-      <section class="statistics-section">
-        <h2>Analiticas de mis hábitos</h2>
-        
-        <div class="filter-dates">
-          <label for="startDate">Desde: </label>
-          <input type="date" id="startDate" />
-          
-          <label for="endDate">Hasta: </label>
-          <input type="date" id="endDate" />
-          
-          <button id="loadStats">Mostrar estadísticas</button>
+        <!-- Selector de semana -->
+        <div class="week-navigation">
+          <button id="prevWeek">← Semana anterior</button>
+          <span id="currentWeekLabel"></span>
+          <button id="nextWeek">Semana siguiente →</button>
         </div>
 
-        <div id="statsResult">
-          <!-- Aquí se mostrará la tabla resumen con las estadísticas -->
-        </div>
-      </section>
+        <!-- Tabla de seguimiento -->
+        <table id="trackingTable" class="tracking-table">
+          <thead>
+            <tr id="weekDaysRow">
+              <th>Hábito</th>
+              <!-- Aquí se insertan las fechas: lun, mar, ... -->
+            </tr>
+          </thead>
+          <tbody id="habitRows">
+            <!-- Aquí se insertan las filas de hábitos con sus checkboxes -->
+          </tbody>
+        </table>
+
+        <section class="statistics-section">
+          <h2>Analiticas de mis hábitos</h2>
+          
+          <div class="filter-dates">
+            <label for="startDate">Desde: </label>
+            <input type="date" id="startDate" />
+            
+            <label for="endDate">Hasta: </label>
+            <input type="date" id="endDate" />
+            
+            <button id="loadStats">Mostrar estadísticas</button>
+          </div>
+
+          <div id="statsResult">
+            <!-- Aquí se mostrará la tabla resumen con las estadísticas -->
+          </div>
+        </section>
 
     </main>
 
-
-  <footer class="footer">
-    <p>&copy; 2025 Denise Eichenblat | TP Integrador Arquitectura Web 2025</p>
-  </footer>
-
+    <footer class="footer">
+      <p>&copy; 2025 Denise Eichenblat | TP Integrador Arquitectura Web 2025</p>
+    </footer>
+  </div>
   <script src="../js/common.js"></script>
   <script src="../js/tracking.js"></script>
 </body>
