@@ -1,3 +1,5 @@
+const USERS_URL = window.env.BACKEND_URL + '/users'
+
 document.addEventListener('DOMContentLoaded', () => {
   const emailDisplay = document.getElementById('emailDisplay');
   const nameDisplay = document.getElementById('nameDisplay');
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   emailDisplay.textContent = userEmail;
 
   function loadProfile() {
-    fetch('http://localhost:5000/api/users/detail', {
+    fetch(`${USERS_URL}/detail`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail })
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       phone: phoneInput.value.trim()
     };
 
-    fetch('http://localhost:5000/api/users', {
+    fetch(USERS_URL, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -99,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   confirmDeleteBtn.addEventListener('click', () => {
-    fetch('http://localhost:5000/api/users', {
+    fetch(USERS_URL, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail })

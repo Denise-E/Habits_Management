@@ -1,3 +1,5 @@
+const HABITS_URL = window.env.BACKEND_URL + '/habits'
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('habitForm');
   if (!form) return;
@@ -8,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Si estamos editando, obtenemos los datos del hábito
   if (habitId) {
-    fetch(`http://localhost:5000/api/habits/${habitId}`)
+    fetch(`${HABITS_URL}/${habitId}`)
       .then(res => res.json())
       .then(habit => {
         if (habit.error) throw new Error(habit.error);
@@ -31,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (habitId) {
-      fetch(`http://localhost:5000/api/habits/${habitId}`, {
+      fetch(`${HABITS_URL}/${habitId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(habit)
       }).then(() => window.location.href = 'reports.html');
     } else {
-      fetch('http://localhost:5000/api/habits', {
+      fetch(HABITS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(habit)

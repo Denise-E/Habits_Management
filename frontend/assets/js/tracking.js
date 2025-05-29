@@ -1,5 +1,7 @@
+const TRACKING_URL = window.env.BACKEND_URL + '/tracking'
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Función para formatear fecha a YYYY-MM-DD (antes de usarla)
+  // Date formatting into YYYY-MM-DD
   function formatDate(date) {
     return date.toISOString().split('T')[0];
   }
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderWeekDates() {
-    weekDaysRow.innerHTML = '<th>Hábito</th>'; // primera celda
+    weekDaysRow.innerHTML = '<th>Hábito</th>'; // First row
 
     for (let i = 0; i < 7; i++) {
       const dayDate = new Date(currentMonday);
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       weekDaysRow.appendChild(th);
     }
 
-    // Mostrar label de la semana (p. ej. "Semana del 19/05/2025")
+    // Showing week labels - Format: "Semana del DD/MM/YYYY"
     const formattedDate = currentMonday.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
     currentWeekLabel.textContent = `Semana del ${formattedDate}`;
   }
@@ -49,12 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
     habits.forEach(habit => {
       const tr = document.createElement('tr');
 
-      // Columna nombre hábito
+      // Habit name column
       const tdName = document.createElement('td');
       tdName.textContent = habit.name;
       tr.appendChild(tdName);
 
-      // Checkbox por día
+      // Daily checkboxes
       for (let i = 0; i < 7; i++) {
         const dayDate = new Date(currentMonday);
         dayDate.setDate(currentMonday.getDate() + i);
@@ -67,10 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.dataset.habitId = habit.id;
         checkbox.dataset.date = dateStr;
 
-        // Marcar si existe tracking para ese hábito y día
+        // Check if theres a tracking for that day (t.date)
         const tracked = tracking.some(t => t.habit_id === habit.id && t.date === dateStr);
         checkbox.checked = tracked;
-
         checkbox.addEventListener('change', handleCheckboxChange);
 
         td.appendChild(checkbox);
@@ -92,14 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (checkbox.checked) {
-      fetch('http://localhost:5000/api/tracking', {
+      fetch(`${TRACKING_URL}/tracking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
       .catch(err => console.error('Error al guardar tracking:', err));
     } else {
-      fetch('http://localhost:5000/api/tracking', {
+      fetch(TRACKING_URL, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fromDate = formatDate(currentMonday);
     const toDate = formatDate(new Date(currentMonday.getTime() + 6 * 86400000));
 
-    fetch('http://localhost:5000/api/tracking/detail', {
+    fetch(`${TRACKING_URL}/detail`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: fromDate, to: toDate })
@@ -137,10 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTracking();
   });
 
-  // Inicializa tabla semanal
+  // Weekly table inicilization
   loadTracking();
 
-  // --- Sección estadísticas ---
+  // --- Analytics Section ---
   const startDateInput = document.getElementById('startDate');
   const endDateInput = document.getElementById('endDate');
   const loadStatsButton = document.getElementById('loadStats');
@@ -165,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      fetch('http://localhost:5000/api/tracking/detail', {
+      fetch(`${TRACKING_URL}/detail`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ from: fromDate, to: toDate })
@@ -210,9 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Función para actualizar estadísticas
+  // Analytics update
   function loadStats(fromDate, toDate) {
-    fetch('http://localhost:5000/api/tracking/detail', {
+    fetch(`${TRACKING_URL}/detail`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: fromDate, to: toDate })
@@ -256,7 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (startDateInput && endDateInput && loadStatsButton && statsResult) {
-    // Valores iniciales
     const todayStr = formatDate(new Date());
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
@@ -294,9 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify(payload)
     };
 
-    fetch('http://localhost:5000/api/tracking', fetchOptions)
+    fetch(TRACKING_URL, fetchOptions)
       .then(() => {
-        // Actualizar estadísticas si la sección está visible y tiene fechas válidas
+        // Analytics update if the section is not hidden 
         if (
           statsResult && statsResult.innerHTML.trim() !== '' &&
           startDateInput && endDateInput &&

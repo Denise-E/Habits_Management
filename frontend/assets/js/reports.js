@@ -1,7 +1,9 @@
+const HABITS_URL = window.env.BACKEND_URL + '/habits'
+
 document.addEventListener('DOMContentLoaded', () => {
   const userEmail = sessionStorage.getItem('userEmail');
 
-  fetch(`http://localhost:5000/api/habits/${userEmail}`)
+  fetch(`${HABITS_URL}/${userEmail}`)
     .then(res => res.json())
     .then(habits => {
       console.log("Habits found:", habits)
@@ -24,6 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function deleteHabit(habitId) {
   console.log("Habit ID", habitId)
-  fetch(`http://localhost:5000/api/habits/${habitId}`, { method: 'DELETE' })
+  fetch(`${HABITS_URL}/${habitId}`, { method: 'DELETE' })
     .then(() => location.reload());
 }

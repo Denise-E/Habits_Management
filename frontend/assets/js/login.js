@@ -1,17 +1,20 @@
+const USERS_URL = window.env.BACKEND_URL + '/users'
+
 document.getElementById('login-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
-  // Limpiar mensaje de error anterior
+  //   // Cleaning previous errors
   let errorElement = document.getElementById('login-error');
   if (errorElement) {
     errorElement.remove();
   }
 
   try {
-    const response = await fetch('http://localhost:5000/api/users/login', {
+    // Log in backend request
+    const response = await fetch(`${USERS_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -20,14 +23,14 @@ document.getElementById('login-form').addEventListener('submit', async function 
     const data = await response.json();
 
     if (!response.ok) {
-      // Mostrar el mensaje de error en el formulario
+      // To show error messages on the form
       const errorMsg = document.createElement('p');
       errorMsg.id = 'login-error';
       errorMsg.textContent = data.message || 'Error desconocido';
       errorMsg.style.color = 'red';
       document.getElementById('login-form').appendChild(errorMsg);
     } else {
-      // Redirigir al home
+      // Home redirection
       const userEmail = sessionStorage['userEmail'] = email;
       window.location.href = './assets/presentation/reports.html';
     }

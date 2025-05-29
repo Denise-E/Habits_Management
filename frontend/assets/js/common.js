@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Header logout button event
   const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
     logoutButton.addEventListener('click', logout);
