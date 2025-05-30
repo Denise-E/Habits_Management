@@ -1,4 +1,4 @@
-const TRACKING_URL = window.env.BACKEND_URL + '/tracking'
+const TRACKING_URL = window.env.BACKEND_URL + '/habits/tracking'
 
 document.addEventListener('DOMContentLoaded', () => {
   // Date formatting into YYYY-MM-DD
