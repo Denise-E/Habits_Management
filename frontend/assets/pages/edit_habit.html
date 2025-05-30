@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Habits Tracker</title>
   <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+
   
   <link rel="stylesheet" href="../css/header.css" />
   <link rel="stylesheet" href="../css/forms.css" />
@@ -17,7 +18,7 @@
         <h1>Habit Tracker</h1>
       </div>
       <nav class="header-center">
-        <a href="../presentation/reports.html">Inicio</a>
+        <a href="reports.html">Inicio</a>
         <a href="tracking.html">Hábitos</a>
       </nav>
       <div class="header-right">
@@ -27,7 +28,7 @@
     </header>
 
     <main class="form-container">
-      <h1>Crear nuevo hábito</h1>
+      <h1>Editar hábito</h1>
       <form id="habitForm">
         <label for="name">Nombre del hábito:</label>
         <input type="text" id="name" name="name" required />
@@ -41,7 +42,7 @@
         <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
         <input type="text" id="goal" name="goal" required />
 
-        <button type="submit">Guardar hábito</button>
+        <button type="submit">Actualizar hábito</button>
       </form>
     </main>
     
@@ -50,7 +51,7 @@
     </footer>
   </div>
   <script src="../config/env.js"></script>
-  <script src="../js/common.js"></script>
-  <script src="../js/habits.js"></script>
+  <script src="../js/users/auth/logout.js"></script>
+  <script src="../js/habits/index.js"></script>
 </body>
 </html>
