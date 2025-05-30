@@ -30,7 +30,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
       errorMsg.style.color = 'red';
       document.getElementById('register-form').appendChild(errorMsg);
     } else {
-      window.location.href = 'reports.html';
+      window.location.href = 'habits.html';
     }
   } catch (error) {
     const errorMsg = document.createElement('p');

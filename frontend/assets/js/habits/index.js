@@ -37,13 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(habit)
-      }).then(() => window.location.href = 'reports.html');
+      }).then(() => window.location.href = 'habits.html');
     } else {
       fetch(HABITS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(habit)
-      }).then(() => window.location.href = 'reports.html');
+      }).then(() => window.location.href = 'habits.html');
     }
   });
 });
