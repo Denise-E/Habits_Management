@@ -18,12 +18,21 @@ La arquitectura está dividida en dos partes:
 ## 📁 Estructura del repositorio
 
 ```
+Arquitectura organizada por áreas funcionales (users, habits, etc.)
+
 /backend
     ├── app.py
-    ├── routes/
-    ├── data/                  # Persistencia en archivos .json
+    ├── src/
+    │   ├── database/               # Archivo JSON donde se guardan los datos
+    │   ├── routes/ 
+    │   │   └── habits_routes.py    # Rutas relacionadas con los hábitos y su trackeo
+    │   │   └── users_routes.py     # Rutas relacionadas con los usuarios del sistema
+    │   ├── services/               # Vincula las lógicas de cada ruta con el db_service
+    │   │   └── db_service.py       # Con todos los métodos relacionados a la persistencia de datos
+    │   │   └── habits_service.py   # Lógica de negocio aplicada a los hábitos
+    |   │       └── habits_service.py   # Lógica de negocio aplicada a los hábitos
+    │   │       └── users_service.py    # Lógica de negocio aplicada a los usuarios
     ├── utils/                 # Funciones auxiliares
-    └── ...
 /frontend
     ├── index.html             # Página de login
     ├── assets/
@@ -49,9 +58,8 @@ La arquitectura está dividida en dos partes:
 - Registro y login de usuarios
 - Persistencia de datos mediante archivos JSON
 - CRUD de hábitos (crear, ver, editar, eliminar)
-- Visualización de reportes y seguimiento diario
-- Logout y gestión de sesión (simple)
-- Arquitectura organizada por áreas funcionales (users, habits, etc.)
+- Visualización de reportes y seguimiento diario (CRUD trackeo de hábitos)
+- Logout y gestión de sesión
 
 ---
 
