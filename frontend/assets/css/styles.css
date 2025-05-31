@@ -10,7 +10,7 @@ body {
 }
 
 .wrapper {
-  flex: 1;
+  flex: 1; /* Ocupará todo el espacio restante entre header y footer */
   display: flex;
   flex-direction: column;
 }
