@@ -126,3 +126,15 @@ a {
   display: flex;
   align-items: center;
 }
+
+/* Footer styles */
+
+footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  height: 1rem;
+  padding: 1rem;  
+  display: flex;
+  align-items: center;    /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente (opcional, porque ya tenés text-align) */
+}
