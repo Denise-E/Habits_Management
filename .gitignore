@@ -2,6 +2,7 @@
 pendings.txt
 venv/
 node_modules/
+__pycache__/
 
 # Logs
 logs
