@@ -1,6 +1,7 @@
 .env
 pendings.txt
 venv/
+node_modules/
 
 # Logs
 logs

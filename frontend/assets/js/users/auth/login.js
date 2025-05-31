@@ -32,7 +32,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
     } else {
       // Home redirection
       const userEmail = sessionStorage['userEmail'] = email;
-      window.location.href = './assets/pages/habits.html';
+      window.location.href = './assets/pages/habits/habits.html';
     }
   } catch (error) {
     const errorMsg = document.createElement('p');

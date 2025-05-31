@@ -41,14 +41,30 @@ Arquitectura organizada por áreas funcionales (users, habits, etc.)
     │   ├── config/
     │   │   └── env.js         # Variables de entorno para configuración
     │   ├── img/               # Favicon e imágenes
-    │   └── pages/
-    │       ├── users/
-    │       │   ├── auth/      # login.js, register.js and logout.js
-    │       │   └── profile.js
-    │       ├── habits/
-    │       │   ├── habits.js
-    │       │   ├── reports.js
-    │       │   └── tracking.js
+    │   └── js/             # Scripts generales
+    │   |   ├── users/
+    │   |   │   ├── auth/      # login.js, register.js and logout.js
+    │   |   │   └── profile.js
+    │   |   ├── habits/
+    │   |   │   ├── habits.js
+    │   |   │   ├── reports.js
+    │   |   ├── tracking/    
+    │   |   │   └── tracking.js
+    |   |   |- include-partials.js  # Para incluir el header y footer dinámicamente
+    │   └── pages/             # Archivos HTML
+    │   |   ├── partials/
+    │   |   │   ├── footer.html
+    │   |   │   └── header.html
+    │   |   ├── users/
+    │   |   │   ├── register.html
+    │   |   │   └── profile.html
+    │   |   ├── habits/
+    │   |   │   ├── habits.html
+    │   |   │   ├── add_habit.html
+    │   |   │   ├── edit_habit.html
+    │   |   ├── tracking/    
+    │   |   │   └── tracking.html
+    │   |   ├── index.html  # Home
 ```
 
 ---
@@ -104,12 +120,27 @@ python app.py
 
 La API se levantará en el puerto `http://localhost:5000`.
 
-### 3. Abrir el frontend
+### 3. Configuración y ejecución del Frontend (con `serve`)
 
-Desde la carpeta raíz del proyecto, podés abrir el archivo `index.html` directamente en tu navegador. Para esto, hacé click derecho en el archivo, apretá la opción "copy path" del menú y pegá la ruta directamente en el navegador para comenzar a interactuar con la página web.
+#### a. Instalá las dependencias necesarias
 
-> No se requiere compilación ni bundlers.
+```bash
+cd frontend
+npm init -y            # Genera package.json
+npm install serve --save-dev
+```
 
+#### b. Ejecutá el servidor local
+
+```bash
+npx serve .
+```
+
+Esto levantará el frontend en `http://localhost:3000` (por defecto).
+
+> Nota: `serve` permite usar HTML modular con `fetch()` para `header.html` y `footer.html`, lo cual **no funcionaría abriendo el HTML directamente en el navegador**.
+
+---
 
 ## 📄 Licencia
 
