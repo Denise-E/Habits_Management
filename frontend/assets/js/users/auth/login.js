@@ -1,29 +1,19 @@
-const USERS_URL = window.env.BACKEND_URL + '/users'
+const USERS_URL = window.env.BACKEND_URL + '/users';
 
 document.getElementById('login-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
   let error = false;
 
-  if (!email) {
-    setError('email', 'El email es obligatorio');
-    isValid = false;
-    error = true;
-  }
+  // Limpio errores anteriores de campos
+  document.getElementById('error-email').textContent = '';
+  document.getElementById('error-password').textContent = '';
 
-  if (!password) {
-    setError('password', 'La contraseña es obligatoria');
-    isValid = false;
-    error = true;
-  }
-
-  //   // Cleaning previous errors
+  // Limpio error general si existe
   let errorElement = document.getElementById('login-error');
-  if (errorElement) {
-    errorElement.remove();
-  }
+  if (errorElement) errorElement.remove();
 
   function setError(fieldId, message) {
     const errorSpan = document.getElementById(`error-${fieldId}`);
@@ -33,7 +23,17 @@ document.getElementById('login-form').addEventListener('submit', async function 
     }
   }
 
-  if(!error){
+  if (!email) {
+    setError('email', 'El email es obligatorio');
+    error = true;
+  }
+
+  if (!password) {
+    setError('password', 'La contraseña es obligatoria');
+    error = true;
+  }
+
+  if (!error) {
     try {
       const response = await fetch(`${USERS_URL}/login`, {
         method: 'POST',
@@ -44,24 +44,31 @@ document.getElementById('login-form').addEventListener('submit', async function 
       const data = await response.json();
 
       if (!response.ok) {
-        // To show error messages on the form
+        // Crear mensaje de error usando data.error (según lo que pediste)
         const errorMsg = document.createElement('p');
         errorMsg.id = 'login-error';
-        errorMsg.textContent = data.message || 'Error desconocido';
+        errorMsg.textContent = data.error || 'Error desconocido';
         errorMsg.style.color = 'red';
-        document.getElementById('login-form').appendChild(errorMsg);
+
+        // Insertar el error justo antes del botón submit
+        const form = document.getElementById('login-form');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        form.insertBefore(errorMsg, submitBtn);
       } else {
-        // Home redirection
-        const userEmail = sessionStorage['userEmail'] = email;
+        // Login exitoso
+        sessionStorage['userEmail'] = email;
         window.location.href = './assets/pages/habits/habits.html';
       }
-    } catch (error) {
+    } catch (err) {
       const errorMsg = document.createElement('p');
       errorMsg.id = 'login-error';
       errorMsg.textContent = 'No se pudo conectar con el servidor.';
       errorMsg.style.color = 'red';
-      document.getElementById('login-form').appendChild(errorMsg);
-    } 
+
+      const form = document.getElementById('login-form');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      form.insertBefore(errorMsg, submitBtn);
+    }
   }
-  
 });
+
