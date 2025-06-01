@@ -128,7 +128,7 @@ def get_tracking():
 
 @habits.route('/tracking', methods=['POST'])
 @cross_origin()
-def post_tracking():
+def create_tracking():
     try:
         tracking_data = request.get_json()
         data = DBService.read_data()
@@ -137,13 +137,13 @@ def post_tracking():
             "habit_id": tracking_data["habit_id"],
             "date": tracking_data["date"]
         }
+        new_track['id'] = len(data["tracking"]) + 1
 
         if new_track not in data["tracking"]:
             data["tracking"].append(new_track)
             DBService.save_data(data)
 
         return jsonify(new_track), 201
-
     except Exception as e:
         logger.error(f"Error saving tracking: {e}")
         return jsonify({"error": "Error saving tracking data"}), 500

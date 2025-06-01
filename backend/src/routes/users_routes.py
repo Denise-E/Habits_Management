@@ -27,6 +27,7 @@ def register():
         if any(user["email"] == new_user["email"] for user in db["users"]):
             return jsonify({"error": "El email ya está registrado"}), 409
 
+        new_user['id'] = len(data["users"]) + 1
         db["users"].append(new_user)
         DBService.save_data(db)
 
@@ -55,7 +56,7 @@ def login():
         if not user:
             return jsonify({"error": "Credenciales inválidas"}), 401
 
-        return jsonify({"name": user["name"], "email": user["email"]}), 200
+        return jsonify({"id": user["id"], "name": user["name"], "email": user["email"]}), 200
     except Exception as e:
         logger.error(f"Error while loging in: {e}")
         return jsonify({"error": "No se pudo iniciar sesión"}), 400
@@ -77,7 +78,7 @@ def get_user():
             return jsonify({"error": "Usuario no encontrado"}), 404
 
         print(f"User: {user}")
-        return jsonify({"name": user["name"], "email": user["email"]}), 200
+        return jsonify({"id": user["id"], "name": user["name"], "email": user["email"]}), 200
     except Exception as e:
         logger.error(f"Error al obtener usuario: {e}")
         return jsonify({"error": "No se pudo obtener el usuario"}), 400
