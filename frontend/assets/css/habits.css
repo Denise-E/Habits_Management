@@ -1,27 +1,66 @@
-/* Estilos para la lista de hábitos */
+#habits-container{
+  padding: 2rem;
+}
+
+#habits-container div{
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+/* Lista de hábitos: contenedor vertical con espacios */
 #habitList {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none; 
+  margin-top: 2rem
 }
 
-/* Contenedor de cada hábito */
+/* Cada hábito: fila con espacio entre texto y botones */
 #habitList li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
-  border-radius: 6px;
-  padding: .5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: default;
 }
 
-#habitList button {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
+#habitList li:hover {
+  box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Texto del hábito: que tome todo el espacio disponible */
+#habitList li span.habit-name {
+  font-size: 1.1rem;
+  color: #065f46;
+  font-weight: 600;
+  flex-grow: 1;
+  user-select: none;
+}
+
+/* Contenedor de los botones: fila, botones juntos con espacio */
+#habitList li .habit-actions {
   display: flex;
-  transition: color 0.2s ease;
-  padding: 0;
+  gap: 0.8rem;
+}
+
+/* Botones: sin fondo, con tamaño cómodo, cursor pointer */
+#habitList button {
+  background: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 70px;
 }

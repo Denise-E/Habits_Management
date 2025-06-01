@@ -6,21 +6,30 @@
   <title>Habits Tracker</title>
   <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
 
-  <link rel="stylesheet" href="../../css/styles.css" >
-  <link rel="stylesheet" href="../../css/habits.css" >
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="stylesheet" href="../../css/habits.css" />
 </head>
 <body>
   <div class="wrapper">
     <header></header>
 
-    <main style="padding: 2rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
+    <main id="habits-container">
+      <div>
         <h2 id="userNameDisplay">Mis hábitos</h2>
         <a href="../habits/add_habit.html" class="button">Agregar</a>
       </div>
 
-      <ul id="habitList" style="list-style: none; padding: 0; margin-top: 2rem;"></ul>
+      <ul id="habitList"></ul>
     </main>
+
+    <dialog id="confirmDeleteHabitDialog">
+      <p>¿Estás seguro de que querés eliminar este hábito?</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+        <button id="confirmDeleteHabitBtn">Sí, eliminar</button>
+        <button id="cancelDeleteHabitBtn">Cancelar</button>
+      </div>
+    </dialog>
+
 
     <footer></footer>
   </div>

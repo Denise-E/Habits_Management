@@ -16,18 +16,26 @@
     <main class="form-container">
       <h1>Crear nuevo hábito</h1>
       <form id="habitForm">
-        <label for="name">Nombre del hábito:</label>
-        <input type="text" id="name" name="name" required />
+        <div class="form-group">
+          <label for="name">Nombre del hábito:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
 
-        <label for="description">Descripción (opcional):</label>
-        <input type="text" id="description" name="description" />
+        <div class="form-group">
+          <label for="description">Descripción (opcional):</label>
+          <input type="text" id="description" name="description" />
+        </div>
 
-        <label for="category">Categoría:</label>
-        <input type="text" id="category" name="category" required />
+        <div class="form-group">
+          <label for="category">Categoría:</label>
+          <input type="text" id="category" name="category" required />
+        </div>
 
-        <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
-        <input type="text" id="goal" name="goal" required />
-
+        <div class="form-group">
+          <label for="goal">Meta diaria (ej: 10 minutos, 1 vez):</label>
+          <input type="text" id="goal" name="goal" required />
+        </div>
+        
         <button type="submit">Guardar hábito</button>
       </form>
     </main>
