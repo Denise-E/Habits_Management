@@ -64,6 +64,13 @@ a {
   text-decoration: none;
 }
 
+dialog {
+  border: none;
+  padding: 1.5rem; /* opcional, para que el contenido no quede pegado */
+  border-radius: 8px; /* opcional, para esquinas redondeadas */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* opcional, para darle un poco de sombra */
+}
+
 /* Header styles */
 .main-header {
   display: flex;
