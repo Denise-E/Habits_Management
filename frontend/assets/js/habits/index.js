@@ -1,14 +1,23 @@
-const HABITS_URL = window.env.BACKEND_URL + '/habits'
+const HABITS_URL = window.env.BACKEND_URL + '/habits';
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('habitForm');
-  if (!form) return;
-
+  const categorySelect = document.getElementById('category');
   const urlParams = new URLSearchParams(window.location.search);
-  const habitId = urlParams.get('id'); 
+  const habitId = urlParams.get('id');
   const userEmail = sessionStorage.getItem('userEmail');
 
-  // Si estamos editando, obtenemos los datos del hábito
+  // Cargar categorías al <select>
+  if (Array.isArray(categories)) {
+    categories.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat;
+      option.textContent = cat;
+      categorySelect.appendChild(option);
+    });
+  }
+
+  // Si estamos editando, rellenar los campos
   if (habitId) {
     fetch(`${HABITS_URL}/${habitId}`)
       .then(res => res.json())
@@ -24,26 +33,57 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', e => {
     e.preventDefault();
 
+    // Limpiar errores anteriores
+    document.getElementById('nameError').textContent = '';
+    document.getElementById('categoryError').textContent = '';
+    document.getElementById('goalError').textContent = '';
+
+    // Obtener valores
+    const name = document.getElementById('name').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const category = document.getElementById('category').value.trim();
+    const goal = document.getElementById('goal').value.trim();
+
+    let hasErrors = false;
+
+    if (!name) {
+      document.getElementById('nameError').textContent = 'Este campo es obligatorio.';
+      hasErrors = true;
+    }
+
+    if (!category) {
+      document.getElementById('categoryError').textContent = 'Seleccioná una categoría.';
+      hasErrors = true;
+    }
+
+    if (!goal) {
+      document.getElementById('goalError').textContent = 'Este campo es obligatorio.';
+      hasErrors = true;
+    }
+
+    if (hasErrors) return;
+
     const habit = {
-      name: document.getElementById('name').value.trim(),
-      description: document.getElementById('description').value.trim(),
-      category: document.getElementById('category').value.trim(),
-      goal: document.getElementById('goal').value.trim(),
-      user_email: userEmail,
+      name,
+      description,
+      category,
+      goal,
+      user_email: userEmail
     };
 
-    if (habitId) {
-      fetch(`${HABITS_URL}/${habitId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(habit)
-      }).then(() => window.location.href = './assets/pages/habits/habits.html');
-    } else {
-      fetch(HABITS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(habit)
-      }).then(() => window.location.href = './assets/pages/habits/habits.html');
-    }
+    const fetchOptions = {
+      method: habitId ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(habit)
+    };
+
+    const targetUrl = habitId ? `${HABITS_URL}/${habitId}` : HABITS_URL;
+
+    fetch(targetUrl, fetchOptions)
+      .then(() => window.location.href = './habits.html')
+      .catch(err => {
+        console.error("Error guardando hábito:", err);
+        alert("Ocurrió un error al guardar el hábito.");
+      });
   });
 });

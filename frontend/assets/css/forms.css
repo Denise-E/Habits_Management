@@ -75,3 +75,18 @@ form button:hover {
 .field-required{
   color: #10b981;
 }
+
+#category {
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+#category option {
+  padding: 0.5rem;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}

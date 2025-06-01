@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Habits Tracker</title>
-  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
-  
-  <link rel="stylesheet" href="../../css/styles.css" >
-  <link rel="stylesheet" href="../../css/forms.css" >
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico" />
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="stylesheet" href="../../css/forms.css" />
 </head>
 <body>
   <div class="wrapper">
@@ -15,10 +14,11 @@
 
     <main class="form-container">
       <h1>Crear nuevo hábito</h1>
-      <form id="habitForm">
+      <form id="habitForm" novalidate>
         <div class="form-group">
           <label for="name">Nombre del hábito <span class="field-required">*</span>:</label>
-          <input type="text" id="name" name="name" required />
+          <input type="text" id="name" name="name" />
+          <div class="error-message" id="nameError"></div>
         </div>
 
         <div class="form-group">
@@ -28,23 +28,29 @@
 
         <div class="form-group">
           <label for="category">Categoría <span class="field-required">*</span>:</label>
-          <input type="text" id="category" name="category" required />
+          <select id="category" name="category">
+            <option value="">Seleccioná una categoría</option>
+          </select>
+          <div class="error-message" id="categoryError"></div>
         </div>
 
         <div class="form-group">
-          <label for="goal">Meta diaria (ej: 10 minutos, 1 vez) <span class="field-required">*</span> :</label>
-          <input type="text" id="goal" name="goal" required />
+          <label for="goal">Frecuencia <span class="field-required">*</span>:</label>
+          <input type="text" id="goal" name="goal" placeholder="Ejemplos: 1 hora al día, 3 veces a la semana, a diario, etc." />
+          <div class="error-message" id="goalError"></div>
         </div>
-        
+
         <button type="submit">Guardar hábito</button>
       </form>
     </main>
-    
+
     <footer></footer>
   </div>
+
   <script src="../../config/env.js"></script>
   <script src="../../js/include-partials.js"></script>
   <script src="../../js/users/auth/logout.js"></script>
+  <script src="../../config/categories.js"></script>
   <script src="../../js/habits/index.js"></script>
 </body>
 </html>
