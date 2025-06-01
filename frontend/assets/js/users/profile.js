@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function toggleEditMode(editMode) {
-    nameDisplay.style.display = editMode ? 'none' : 'block';
-    nameInput.style.display = editMode ? 'block' : 'none';
-    phoneInput.style.display = editMode ? 'block' : 'none';
+  nameDisplay.style.display = editMode ? 'none' : 'block';
+  nameInput.style.display = editMode ? 'block' : 'none';
 
-    editBtn.style.display = editMode ? 'none' : 'inline-block';
-    saveBtn.style.display = editMode ? 'inline-block' : 'none';
-    cancelEditBtn.style.display = editMode ? 'inline-block' : 'none';
-  }
+  editBtn.style.display = editMode ? 'none' : 'inline-block';
+  saveBtn.style.display = editMode ? 'inline-block' : 'none';
+  cancelEditBtn.style.display = editMode ? 'inline-block' : 'none';
+}
+
 
   editBtn.addEventListener('click', () => {
     toggleEditMode(true);
@@ -67,30 +67,29 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   profileForm.addEventListener('submit', e => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const payload = {
-      email: userEmail,
-      name: nameInput.value.trim(),
-      phone: phoneInput.value.trim()
-    };
+  const payload = {
+    email: userEmail,
+    name: nameInput.value.trim(),
+  };
 
-    fetch(USERS_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+  fetch(USERS_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(res => res.json())
+    .then(data => {
+      nameDisplay.textContent = payload.name;
+      toggleEditMode(false);
     })
-      .then(res => res.json())
-      .then(data => {
-        nameDisplay.textContent = payload.name;
+    .catch(err => {
+      console.error('Error actualizando perfil:', err);
+      alert('Error al actualizar perfil');
+    });
+});
 
-        toggleEditMode(false);
-      })
-      .catch(err => {
-        console.error('Error actualizando perfil:', err);
-        alert('Error al actualizar perfil');
-      });
-  });
 
   deleteUserBtn.addEventListener('click', () => {
     confirmDialog.showModal();

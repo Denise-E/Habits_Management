@@ -1,58 +1,64 @@
 .tracking-container {
   max-width: 900px;
-  margin: 20px auto;
-  padding: 0 10px;
-  font-family: Arial, sans-serif;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .week-navigation {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .week-navigation button {
-  background-color: #007bff;
+  background-color: #10b981; /* verde */
   border: none;
   color: white;
-  padding: 8px 14px;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .week-navigation button:hover {
-  background-color: #0056b3;
+  background-color: #059669;
 }
 
 #currentWeekLabel {
   font-weight: bold;
   font-size: 1.1rem;
+  color: #065f46;
 }
 
 .tracking-table {
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .tracking-table thead tr {
-  background-color: #f0f0f0;
+  background-color: #d1fae5; /* verde muy suave */
 }
 
 .tracking-table th,
 .tracking-table td {
-  border: 1px solid #ccc;
-  padding: 8px 6px;
+  border: 1px solid #bbf7d0; /* borde verde claro */
+  padding: 0.75rem;
   vertical-align: middle;
 }
 
 .tracking-table th:first-child,
 .tracking-table td:first-child {
   text-align: left;
-  padding-left: 15px;
+  padding-left: 1rem;
   font-weight: 600;
   width: 200px;
   white-space: nowrap;
@@ -62,21 +68,18 @@
   width: 20px;
   height: 20px;
   cursor: pointer;
-}
-
-/* Checkbox como círculo */
-.habit-checkbox {
   appearance: none;
   -webkit-appearance: none;
-  border: 2px solid #007bff;
+  border: 2px solid #10b981;
   border-radius: 50%;
   outline: none;
   position: relative;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .habit-checkbox:checked {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #10b981;
+  border-color: #10b981;
 }
 
 .habit-checkbox:checked::after {
@@ -104,43 +107,45 @@
   }
 }
 
-
+/* Sección de estadísticas */
 .statistics-section {
-  margin-top: 40px;
-  padding: 20px;
-  border-top: 2px solid #ccc;
-  background-color: #f9f9f9;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-top: 2px solid #a7f3d0;
+  background-color: #f0fdf4;
+  border-radius: 6px;
 }
 
 .statistics-section h2 {
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
-  color: #333;
+  color: #065f46;
 }
 
 .filter-dates {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .filter-dates label {
   font-weight: 600;
-  color: #555;
+  color: #065f46;
 }
 
 .filter-dates input[type="date"] {
-  padding: 5px 8px;
+  padding: 0.4rem 0.6rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #10b981;
   border-radius: 4px;
 }
 
 .filter-dates button {
-  padding: 6px 14px;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
-  background-color: #1976d2;
+  background-color: #10b981;
   color: white;
   border: none;
   border-radius: 4px;
@@ -149,22 +154,25 @@
 }
 
 .filter-dates button:hover {
-  background-color: #115293;
+  background-color: #059669;
 }
 
+/* Tabla de estadísticas */
 #statsResult table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 1rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
-#statsResult th, #statsResult td {
-  padding: 10px;
-  border: 1px solid #ddd;
+#statsResult th,
+#statsResult td {
+  padding: 0.75rem;
+  border: 1px solid #bbf7d0;
   text-align: center;
 }
 
 #statsResult th {
-  background-color: #1976d2;
+  background-color: #10b981;
   color: white;
 }

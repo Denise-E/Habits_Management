@@ -1,7 +1,7 @@
 {
     "users": [
         {
-            "name": "Denise Prueba",
+            "name": "Denise Demo",
             "email": "denise@gmail.com",
             "password": "123456",
             "phone": "1145457777"
@@ -9,6 +9,11 @@
         {
             "name": "Prueba Registro",
             "email": "prueba@gmail.com",
+            "password": "123456"
+        },
+        {
+            "name": "Feredico Rojas",
+            "email": "frojas@gmail.com",
             "password": "123456"
         }
     ],
@@ -84,6 +89,10 @@
         {
             "habit_id": 2,
             "date": "2025-05-29"
+        },
+        {
+            "habit_id": 3,
+            "date": "2025-05-28"
         }
     ]
 }

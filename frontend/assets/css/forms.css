@@ -1,12 +1,6 @@
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-
+/* Centro el formulario */
 .form-container {
-  max-width: 500px;
+  max-width: 40rem;
   margin: 3rem auto;
   padding: 2rem;
   background-color: #ffffff;
@@ -14,28 +8,38 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Titular */
 h1 {
   text-align: center;
   margin-bottom: 2rem;
   color: #333;
 }
 
+/* Grupo de formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+/* Etiquetas */
 form label {
-  display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #444;
 }
 
+/* Inputs */
 form input {
   width: 100%;
   padding: 0.75rem;
-  margin-bottom: 1.5rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
+/* Botones */
 form button {
   width: 100%;
   padding: 0.9rem;
@@ -47,8 +51,14 @@ form button {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 1rem;
 }
 
 form button:hover {
   background-color: #45a049;
+}
+
+/* Clase form opcional */
+.form {
+  width: 100%;
 }

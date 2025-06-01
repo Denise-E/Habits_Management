@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f0fdf4;
   min-height: 100vh;
   display: flex;
@@ -10,7 +10,7 @@ body {
 }
 
 .wrapper {
-  flex: 1; /* Ocupará todo el espacio restante entre header y footer */
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
@@ -30,7 +30,6 @@ body {
   max-width: 400px;
 }
 
-/* Espacio entre el form y el footer */
 .container form {
   margin-bottom: 2rem;
 }
@@ -62,7 +61,8 @@ input {
   font-size: 1rem;
 }
 
-button {
+button,
+a.button {
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;
   background-color: #10b981;
@@ -72,14 +72,18 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
-button:hover {
+button:hover,
+a.button:hover {
   background-color: #059669;
 }
 
 a {
   color: black;
+  text-decoration: none;
 }
 
 /* Header styles */
@@ -89,35 +93,21 @@ a {
   align-items: center;
   background-color: #d1fae5; /* verde suave */
   padding: 1rem 2rem;
-  border-bottom: 2px solid #10b981; /* verde más oscuro */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: sans-serif;
+  border-bottom: 2px solid #10b981;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  flex-wrap: wrap; /* Responsivo si es necesario */
+  gap: 1rem;
 }
 
 .main-header h1 {
   margin: 0;
-  color: #065f46;
   font-size: 1.8rem;
 }
 
-.header-center a,
-.header-right a,
-.header-right button {
-  margin-left: 1rem;
+.main-header h1 a {
   text-decoration: none;
-  color: #047857;
-  font-weight: bold;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-}
-
-.header-center a:hover,
-.header-right a:hover,
-.header-right button:hover {
-  color: #064e3b;
+  color: #065f46;
 }
 
 .header-left,
@@ -125,16 +115,39 @@ a {
 .header-right {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+
+.header-center a,
+.header-right a,
+.header-right button {
+  text-decoration: none;
+  color: #047857;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-center a:hover,
+.header-right a:hover,
+.header-right button:hover {
+  color: #064e3b;
+  background-color: rgba(16, 185, 129, 0.1); /*fondo verde */
 }
 
 /* Footer styles */
-
 footer {
   background-color: #f1f1f1;
   text-align: center;
-  height: 1rem;
-  padding: 1rem;  
+  margin-top: auto;
   display: flex;
-  align-items: center;    /* Centra verticalmente */
-  justify-content: center; /* Centra horizontalmente (opcional, porque ya tenés text-align) */
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
 }

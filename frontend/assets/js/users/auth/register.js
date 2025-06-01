@@ -30,7 +30,8 @@ document.getElementById('register-form').addEventListener('submit', async functi
       errorMsg.style.color = 'red';
       document.getElementById('register-form').appendChild(errorMsg);
     } else {
-      window.location.href = './assets/pages/habits/habits.html';
+      const userEmail = sessionStorage['userEmail'] = email;
+      window.location.href = '../../pages/habits/habits.html';
     }
   } catch (error) {
     const errorMsg = document.createElement('p');
