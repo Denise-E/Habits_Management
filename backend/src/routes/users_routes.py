@@ -17,7 +17,9 @@ def register():
         new_user = {
             "name": data.get("name", None),
             "email": data.get("email", None),
-            "password": data.get("password", None)
+            "password": data.get("password", None),
+            "phone": data.get("phone", None),
+            "birthday_date": data.get("birthdate", None)
         }
 
         if not new_user["name"] or not new_user["email"] or not new_user["password"]:
@@ -27,7 +29,7 @@ def register():
         if any(user["email"] == new_user["email"] for user in db["users"]):
             return jsonify({"error": "El email ya está registrado"}), 409
 
-        new_user['id'] = len(data["users"]) + 1
+        new_user['id'] = len(db["users"]) + 1
         db["users"].append(new_user)
         DBService.save_data(db)
 

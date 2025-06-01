@@ -15,17 +15,34 @@
       <form class="form" id="register-form">
         <div class="form-group">
           <label for="name">Nombre completo <span class="field-required">*</span></label>
-          <input type="text" id="name" name="name" required />
+          <input type="text" id="name" name="name" />
+          <span class="error-message" id="error-name"></span>
         </div>
+
         
         <div class="form-group">
           <label for="email">Mail <span class="field-required">*</span></label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" />
+          <span class="error-message" id="error-email"></span>
         </div>
-        
+
+        <div class="form-group">
+          <label for="phone">Teléfono <span class="field-required">*</span></label>
+          <input type="tel" id="phone" name="phone" />
+          <span class="error-message" id="error-phone"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="birthdate">Fecha de nacimiento <span class="field-required">*</span></label>
+          <input type="date" id="birthdate" name="birthdate" />
+          <span class="error-message" id="error-birthdate"></span>
+        </div>
+
+
         <div class="form-group">
           <label for="password">Contraseña <span class="field-required">*</span></label>
-          <input type="password" id="password" name="password" required />
+          <input type="password" id="password" name="password" />
+          <span class="error-message" id="error-password"></span>
         </div>
 
         <button type="submit">Registrarse</button>
