@@ -35,7 +35,6 @@ document.getElementById('login-form').addEventListener('submit', async function 
 
   if(!error){
     try {
-      // Log in backend request
       const response = await fetch(`${USERS_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

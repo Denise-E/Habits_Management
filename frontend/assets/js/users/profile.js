@@ -1,10 +1,16 @@
-const USERS_URL = window.env.BACKEND_URL + '/users'
+const USERS_URL = window.env.BACKEND_URL + '/users';
 
 document.addEventListener('DOMContentLoaded', () => {
   const emailDisplay = document.getElementById('emailDisplay');
   const nameDisplay = document.getElementById('nameDisplay');
+  const phoneDisplay = document.getElementById('phoneDisplay');
+  const birthdateDisplay = document.getElementById('birthdateDisplay');
 
   const nameInput = document.getElementById('name');
+  const phoneInput = document.getElementById('phone');
+
+  const errorName = document.getElementById('error-name');
+  const errorPhone = document.getElementById('error-phone');
 
   const profileForm = document.getElementById('profileForm');
 
@@ -34,9 +40,14 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then(res => res.json())
       .then(data => {
-        const name = data.name || '';
+        const { name = '', phone = '', birthdate = '' } = data;
+
         nameDisplay.textContent = name;
+        phoneDisplay.textContent = phone;
+        birthdateDisplay.textContent = birthdate;
+
         nameInput.value = name;
+        phoneInput.value = phone;
       })
       .catch(err => {
         console.error('Error cargando perfil:', err);
@@ -45,49 +56,84 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function toggleEditMode(editMode) {
-  nameDisplay.style.display = editMode ? 'none' : 'block';
-  nameInput.style.display = editMode ? 'block' : 'none';
+    nameDisplay.style.display = editMode ? 'none' : 'block';
+    nameInput.style.display = editMode ? 'block' : 'none';
 
-  editBtn.style.display = editMode ? 'none' : 'inline-block';
-  saveBtn.style.display = editMode ? 'inline-block' : 'none';
-  cancelEditBtn.style.display = editMode ? 'inline-block' : 'none';
-}
+    phoneDisplay.style.display = editMode ? 'none' : 'block';
+    phoneInput.style.display = editMode ? 'block' : 'none';
 
+    editBtn.style.display = editMode ? 'none' : 'inline-block';
+    saveBtn.style.display = editMode ? 'inline-block' : 'none';
+    cancelEditBtn.style.display = editMode ? 'inline-block' : 'none';
+  }
 
   editBtn.addEventListener('click', () => {
     toggleEditMode(true);
   });
 
   cancelEditBtn.addEventListener('click', () => {
-    // Restaurar valores previos desde los <p>
     nameInput.value = nameDisplay.textContent;
+    phoneInput.value = phoneDisplay.textContent;
+    clearErrors();
     toggleEditMode(false);
   });
 
   profileForm.addEventListener('submit', e => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const payload = {
-    email: userEmail,
-    name: nameInput.value.trim(),
-  };
+    clearErrors();
 
-  fetch(USERS_URL, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-    .then(res => res.json())
-    .then(data => {
-      nameDisplay.textContent = payload.name;
-      toggleEditMode(false);
+    const name = nameInput.value.trim();
+    const phone = phoneInput.value.trim();
+
+    let valid = true;
+
+    if (!name) {
+      setError('name', 'El nombre es obligatorio');
+      errorName.textContent = 'El nombre es requerido';
+      valid = false;
+    }
+
+    if (!phone) {
+      setError('phone', 'El telefono es obligatorio');
+      errorPhone.textContent = 'El teléfono es requerido';
+      valid = false;
+    }
+
+    
+  function setError(fieldId, message) {
+    const errorSpan = document.getElementById(`error-${fieldId}`);
+    if (errorSpan) {
+      errorSpan.textContent = message;
+      errorSpan.style.color = 'red';
+    }
+  }
+  
+    if (!valid) return;
+
+    const payload = { email: userEmail, name, phone };
+
+    fetch(USERS_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     })
-    .catch(err => {
-      console.error('Error actualizando perfil:', err);
-      alert('Error al actualizar perfil');
-    });
-});
+      .then(res => res.json())
+      .then(() => {
+        nameDisplay.textContent = name;
+        phoneDisplay.textContent = phone;
+        toggleEditMode(false);
+      })
+      .catch(err => {
+        console.error('Error actualizando perfil:', err);
+        alert('Error al actualizar perfil');
+      });
+  });
 
+  function clearErrors() {
+    errorName.textContent = '';
+    errorPhone.textContent = '';
+  }
 
   deleteUserBtn.addEventListener('click', () => {
     confirmDialog.showModal();
@@ -97,24 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmDialog.close();
   });
 
-confirmDeleteBtn.addEventListener('click', () => {
-  const url = `${USERS_URL}/${encodeURIComponent(userEmail)}`;
+  confirmDeleteBtn.addEventListener('click', () => {
+    const url = `${USERS_URL}/${encodeURIComponent(userEmail)}`;
 
-  fetch(url, {
-    method: 'DELETE'
-  })
-    .then(res => {
-      if (!res.ok) throw new Error('Error al eliminar usuario');
-      return res.json();
-    })
-    .then(data => {
-      sessionStorage.clear();
-      window.location.href = '../../../index.html';
-    })
-    .catch(err => {
-      console.error('Error eliminando usuario:', err);
-      alert('Error al eliminar usuario');
-    });
+    fetch(url, { method: 'DELETE' })
+      .then(res => {
+        if (!res.ok) throw new Error('Error al eliminar usuario');
+        return res.json();
+      })
+      .then(() => {
+        sessionStorage.clear();
+        window.location.href = '../../../index.html';
+      })
+      .catch(err => {
+        console.error('Error eliminando usuario:', err);
+        alert('Error al eliminar usuario');
+      });
   });
 
   loadProfile();

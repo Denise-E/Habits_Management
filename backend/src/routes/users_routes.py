@@ -79,8 +79,7 @@ def get_user():
         if not user:
             return jsonify({"error": "Usuario no encontrado"}), 404
 
-        print(f"User: {user}")
-        return jsonify({"id": user["id"], "name": user["name"], "email": user["email"]}), 200
+        return jsonify({"id": user["id"], "name": user["name"], "email": user["email"], "phone": user["phone"], "birthdate": user["birthday_date"]}), 200
     except Exception as e:
         logger.error(f"Error al obtener usuario: {e}")
         return jsonify({"error": "No se pudo obtener el usuario"}), 400
@@ -93,6 +92,8 @@ def update_user():
         email = data.get("email", None)
         name = data.get("name", None)
         phone = data.get("phone", None)
+        birthday_date = data.get("birthdate", None)
+
 
         if not email:
             return jsonify({"error": "Email requerido"}), 400
@@ -107,6 +108,8 @@ def update_user():
             user["name"] = name
         if phone is not None:
             user["phone"] = phone
+        if birthday_date is not None:
+            user["birthday_date"] = phone
 
         DBService.save_data(db)
         return jsonify({"message": "Usuario actualizado correctamente"}), 200
