@@ -7,7 +7,7 @@ from utils.logger import logger
 users = Blueprint('users', __name__)
 
 
-@users.route('/register', methods=['POST'])
+@users.route('/register', methods=['POST']) # TODO add ID
 @cross_origin()
 def register():
     try:
@@ -111,18 +111,12 @@ def update_user():
         logger.error(f"Error al actualizar usuario: {e}")
         return jsonify({"error": "No se pudo actualizar el usuario"}), 400
 
-@users.route('', methods=['DELETE'])
+@users.route('/<string:user_email>', methods=['DELETE'])
 @cross_origin()
-def delete_user():
+def delete_user(user_email):
     try:
-        data = request.get_json()
-        email = data.get("email", None)
-
-        if not email:
-            return jsonify({"error": "Email requerido"}), 400
-
         db = DBService.load_data()
-        user_index = next((i for i, u in enumerate(db["users"]) if u["email"] == email), None)
+        user_index = next((i for i, u in enumerate(db["users"]) if u["email"] == user_email), None)
 
         if user_index is None:
             return jsonify({"error": "Usuario no encontrado"}), 404

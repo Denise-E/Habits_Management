@@ -97,21 +97,24 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmDialog.close();
   });
 
-  confirmDeleteBtn.addEventListener('click', () => {
-    fetch(USERS_URL, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail })
+confirmDeleteBtn.addEventListener('click', () => {
+  const url = `${USERS_URL}/${encodeURIComponent(userEmail)}`;
+
+  fetch(url, {
+    method: 'DELETE'
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('Error al eliminar usuario');
+      return res.json();
     })
-      .then(res => res.json())
-      .then(data => {
-        sessionStorage.clear();
-        window.location.href = '../../index.html';
-      })
-      .catch(err => {
-        console.error('Error eliminando usuario:', err);
-        alert('Error al eliminar usuario');
-      });
+    .then(data => {
+      sessionStorage.clear();
+      window.location.href = '../../../index.html';
+    })
+    .catch(err => {
+      console.error('Error eliminando usuario:', err);
+      alert('Error al eliminar usuario');
+    });
   });
 
   loadProfile();

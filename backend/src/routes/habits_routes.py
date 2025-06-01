@@ -149,20 +149,16 @@ def post_tracking():
         return jsonify({"error": "Error saving tracking data"}), 500
 
 
-@habits.route('/tracking', methods=['DELETE'])
+@habits.route('/tracking/<int:habit_id>/<string:habit_date>', methods=['DELETE'])
 @cross_origin()
-def delete_tracking():
+def delete_tracking(habit_id, habit_date):
     try:
-        input_data = request.get_json()
-        habit_id = input_data['habit_id']
-        date = input_data['date']
         data = DBService.read_data()
 
-        data["tracking"] = [t for t in data["tracking"] if not (t["habit_id"] == habit_id and t["date"] == date)]
+        data["tracking"] = [t for t in data["tracking"] if not (t["habit_id"] == habit_id and t["date"] == habit_date)]
         DBService.save_data(data)
 
         return jsonify({"message": "Tracking entry deleted"}), 200
-
     except Exception as e:
         logger.error(f"Error deleting tracking: {e}")
         return jsonify({"error": "Error deleting tracking data"}), 500
