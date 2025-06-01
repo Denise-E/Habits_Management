@@ -75,7 +75,7 @@ Arquitectura organizada por áreas funcionales (users, habits, etc.)
 - Persistencia de datos mediante archivos JSON
 - CRUD de hábitos (crear, ver, editar, eliminar)
 - Visualización de reportes y seguimiento diario (CRUD trackeo de hábitos)
-- Logout y gestión de sesión
+- Logout y gestión de sesión, incluyendo validación de usuario logueado antes de renderizar los HTML
 
 ---
 
