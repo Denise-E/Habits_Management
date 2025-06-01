@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const nameDisplay = document.getElementById('nameDisplay');
 
   const nameInput = document.getElementById('name');
-  const phoneInput = document.getElementById('phone');
 
   const profileForm = document.getElementById('profileForm');
 
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(data => {
         const name = data.name || '';
-        const phone = data.phone || '';
         nameDisplay.textContent = name;
         nameInput.value = name;
       })
