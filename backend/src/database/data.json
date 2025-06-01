@@ -2,7 +2,7 @@
     "users": [
         {
             "id": 1,
-            "name": "Denise Eichenblat Demo",
+            "name": "Denise Demo",
             "email": "denise@gmail.com",
             "password": "123456",
             "phone": "1145457777"

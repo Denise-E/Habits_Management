@@ -72,3 +72,7 @@ form button:hover {
 .redirect-text{
   color: #10b981;
 }
+
+.field-required{
+  color: #10b981;
+}
