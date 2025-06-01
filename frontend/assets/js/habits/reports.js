@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("Habits found:", habits)
       const list = document.getElementById('habitList');
       list.innerHTML = '';
+      
+      if (!Array.isArray(habits) || habits.length == 0) {
+        console.log("Inserting no habits message")
+        habitList.innerHTML = `
+          <li style="list-style: none; margin-top: 1rem; font-size: 1.2rem; color: #333; text-align: center; display: block;">
+            Todavía no registraste ningún hábito. 
+          </li>
+        `;
+        return;
+      }
+
       habits.forEach(habit => {
         const li = document.createElement('li');
         li.style.marginBottom = '1rem';
