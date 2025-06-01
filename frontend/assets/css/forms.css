@@ -1,6 +1,10 @@
-/* Centro el formulario */
+.form {
+  width: 100%;
+}
+
 .form-container {
-  max-width: 40rem;
+  max-width: 40rem; 
+  width: 90%; 
   margin: 3rem auto;
   padding: 2rem;
   background-color: #ffffff;
@@ -8,28 +12,35 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Titular */
 h1 {
   text-align: center;
   margin-bottom: 2rem;
   color: #333;
 }
 
-/* Grupo de formulario */
 .form-group {
   display: flex;
   flex-direction: column;
+  width: 100%; 
   margin-bottom: 1.5rem;
+  gap: .5rem;
 }
 
-/* Etiquetas */
+
 form label {
-  margin-bottom: 0.5rem;
   font-weight: 600;
   color: #444;
 }
 
-/* Inputs */
+.profile-value {
+  color: #333;
+  font-size: 1rem;
+}
+
+form input.hidden {
+  display: none;
+}
+
 form input {
   width: 100%;
   padding: 0.75rem;
@@ -43,7 +54,7 @@ form input {
 form button {
   width: 100%;
   padding: 0.9rem;
-  background-color: #4CAF50;
+  background-color: #10b981;
   color: white;
   font-size: 1rem;
   font-weight: bold;
@@ -58,7 +69,6 @@ form button:hover {
   background-color: #45a049;
 }
 
-/* Clase form opcional */
-.form {
-  width: 100%;
+.redirect-text{
+  color: #10b981;
 }
