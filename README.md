@@ -83,13 +83,6 @@ Arquitectura organizada por áreas funcionales (users, habits, etc.)
 
 La configuración del entorno en el frontend se realiza a través del archivo `env.js` para poder ser accedidas desde los diferentes archivos javascript que componen el proyecto:
 
-```js
-window.env = {
-  BACKEND_URL: "http://localhost:5000/api",
-  VERSION: "1.0.0",
-};
-```
-
 ---
 
 ## 🔐 Autenticación
