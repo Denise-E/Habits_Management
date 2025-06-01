@@ -106,16 +106,21 @@ a {
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  line-height: 1;
-  padding: 0.4rem 0.6rem;
   border-radius: 4px;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-right button {
+  margin-bottom: .7rem;
 }
 
 .header-center a:hover,
 .header-right a:hover,
 .header-right button:hover {
-  color: #064e3b;
+  color: #12ba85;
+}
+
+.header-right button:hover {
   background-color: rgba(16, 185, 129, 0.1); /*fondo verde */
 }
 
