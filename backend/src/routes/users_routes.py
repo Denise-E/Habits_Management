@@ -63,18 +63,12 @@ def login():
         logger.error(f"Error while loging in: {e}")
         return jsonify({"error": "No se pudo iniciar sesión"}), 400
 
-@users.route('/detail', methods=['POST'])
+@users.route('/detail/<string:user_email>', methods=['GET'])
 @cross_origin()
-def get_user():
+def get_user(user_email):
     try:
-        data = request.get_json()
-        email = data.get("email", None)
-
-        if not email:
-            return jsonify({"error": "Email requerido"}), 400
-
         db = DBService.load_data()
-        user = next((u for u in db["users"] if u["email"] == email), None)
+        user = next((u for u in db["users"] if u["email"] == user_email), None)
 
         if not user:
             return jsonify({"error": "Usuario no encontrado"}), 404

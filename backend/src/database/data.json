@@ -29,5 +29,11 @@
             "created_at": "2025-06-01"
         }
     ],
-    "tracking": []
+    "tracking": [
+        {
+            "habit_id": 2,
+            "date": "2025-06-03",
+            "id": 2
+        }
+    ]
 }

@@ -28,10 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
   emailDisplay.textContent = userEmail;
 
   function loadProfile() {
-    fetch(`${USERS_URL}/detail`, {
-      method: 'POST',
+    fetch(`${USERS_URL}/detail/${userEmail}`, {
+      method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail })
     })
       .then(res => res.json())
       .then(data => {

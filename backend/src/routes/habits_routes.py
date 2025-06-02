@@ -26,22 +26,6 @@ def get_habits(user_email):
         logger.error(f"Error while getting habits: {e}")
         return jsonify({"error": "Unable to get the information"}), 400
 
-@habits.route('/habit/<int:habit_id>', methods=['GET'])
-@cross_origin()
-def get_habit_by_id(habit_id):
-    try:
-        logger.info(f"Getting habit with id: {habit_id}")
-        data = DBService.read_data()
-
-        habit = next((h for h in data["habits"] if h["id"] == habit_id), None)
-
-        if not habit:
-            return jsonify({"error": "Habit not found"}), 404
-
-        return jsonify(habit), 200
-    except Exception as e:
-        logger.error(f"Error while getting habit by id: {e}")
-        return jsonify({"error": "Unable to get the information"}), 400
 
 @habits.route('/<int:habit_id>', methods=['GET'])
 @cross_origin()
@@ -145,7 +129,7 @@ def get_tracking():
 
     except Exception as e:
         logger.error(f"Error fetching tracking: {e}")
-        return jsonify({"error": "Error fetching tracking data"}), 500
+        return jsonify({"error": "Error fetching tracking data"}), 400
 
 @habits.route('/tracking', methods=['POST'])
 @cross_origin()
@@ -158,6 +142,9 @@ def create_tracking():
             "habit_id": tracking_data["habit_id"],
             "date": tracking_data["date"]
         }
+
+        if not new_track["habit_id"] or not new_track["date"]:
+            return jsonify({"error": "Date and habit_id required"}), 400
         new_track['id'] = len(data["tracking"]) + 1
 
         if new_track not in data["tracking"]:
@@ -167,7 +154,7 @@ def create_tracking():
         return jsonify(new_track), 201
     except Exception as e:
         logger.error(f"Error saving tracking: {e}")
-        return jsonify({"error": "Error saving tracking data"}), 500
+        return jsonify({"error": "Error saving tracking data"}), 400
 
 
 @habits.route('/tracking/<int:habit_id>/<string:habit_date>', methods=['DELETE'])
@@ -182,4 +169,4 @@ def delete_tracking(habit_id, habit_date):
         return jsonify({"message": "Tracking entry deleted"}), 200
     except Exception as e:
         logger.error(f"Error deleting tracking: {e}")
-        return jsonify({"error": "Error deleting tracking data"}), 500
+        return jsonify({"error": "Error deleting tracking data"}), 400

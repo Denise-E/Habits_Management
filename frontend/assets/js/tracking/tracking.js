@@ -1,9 +1,24 @@
 const TRACKING_URL = window.env.BACKEND_URL + '/habits/tracking';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Date formatting
-  function formatDate(date) {
-    return date.toISOString().split('T')[0];
+  function formatDate(dateInput) {
+    let date;
+    if (typeof dateInput === 'string') {
+      const [part1, part2, part3] = dateInput.split('/');
+      if (part1.length === 2 && part2.length === 2 && part3.length === 4) {
+        // es DD/MM/YYYY
+        date = new Date(`${part3}-${part2}-${part1}`);
+      } else {
+        date = new Date(dateInput);
+      }
+    } else {
+      date = new Date(dateInput);
+    }
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   const weekDaysRow = document.getElementById('weekDaysRow');
@@ -81,7 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.dataset.habitId = habit.id;
         checkbox.dataset.date = dateStr;
 
-        const tracked = tracking.some(t => t.habit_id === habit.id && t.date === dateStr);
+        const tracked = tracking.some(t => {
+          const normalizedDate = formatDate(t.date);
+          return t.habit_id === habit.id && normalizedDate === dateStr;
+        });
+
         checkbox.checked = tracked;
         checkbox.addEventListener('change', handleCheckboxChange);
 
@@ -103,13 +122,25 @@ document.addEventListener('DOMContentLoaded', () => {
       date: date
     };
 
-    const fetchOptions = {
-      method: checkbox.checked ? 'POST' : 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    };
+    let fetchUrl = TRACKING_URL;
+    let fetchOptions = {};
 
-    fetch(TRACKING_URL, fetchOptions)
+    if (checkbox.checked) {
+      // Tracking creation
+      fetchOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      };
+    } else {
+      // Tracking deletion (URL con path params, sin body)
+      fetchUrl = `${TRACKING_URL}/${habitId}/${date}`;
+      fetchOptions = {
+        method: 'DELETE'
+      };
+    }
+
+    fetch(fetchUrl, fetchOptions)
       .then(() => {
         if (
           statsResult && statsResult.innerHTML.trim() !== '' &&
@@ -203,14 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (startDateInput && endDateInput && loadStatsButton && statsResult) {
-    const todayStr = formatDate(new Date());
+  if (startDateInput && endDateInput && loadStatsButton && statsResult) {    
+    const today = new Date();
     const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    const weekAgoStr = formatDate(weekAgo);
+    weekAgo.setDate(today.getDate() - 7);
 
-    startDateInput.value = weekAgoStr;
-    endDateInput.value = todayStr;
+    startDateInput.value = formatDate(weekAgo);
+    endDateInput.value = formatDate(today); 
 
     loadStatsButton.addEventListener('click', () => {
       const fromDate = startDateInput.value;
