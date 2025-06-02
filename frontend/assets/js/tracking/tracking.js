@@ -313,6 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: { 'Content-Type': 'application/json' },
         })
         .catch(err => console.error('Error al eliminar tracking:', err));
+        loadStats(startDateInput.value, endDateInput.value);
       }
     }
 });
