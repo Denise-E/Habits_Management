@@ -122,11 +122,12 @@ def get_tracking():
 
         tracking = [t for t in data["tracking"] if from_date <= t["date"] <= to_date]
 
-        return jsonify({
+        habits_info = {
             "habits": data["habits"],
             "tracking": tracking
-        })
-
+        }
+        logger.info(f"Trackings found: {habits_info}")
+        return jsonify(habits_info), 200
     except Exception as e:
         logger.error(f"Error fetching tracking: {e}")
         return jsonify({"error": "Error fetching tracking data"}), 400
@@ -142,6 +143,8 @@ def create_tracking():
             "habit_id": tracking_data["habit_id"],
             "date": tracking_data["date"]
         }
+
+        logger.info(f"New track to save: {new_track}")
 
         if not new_track["habit_id"] or not new_track["date"]:
             return jsonify({"error": "Date and habit_id required"}), 400

@@ -22,7 +22,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
   }
 
   if (!email) {
-    setError('email', 'El email es obligatorio');
+    setError('email', 'El mail es obligatorio');
     error = true;
   }
 

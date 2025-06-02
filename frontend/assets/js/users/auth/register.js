@@ -22,7 +22,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email) {
-    setError('email', 'El email es obligatorio');
+    setError('email', 'El mail es obligatorio');
     isValid = false;
   } else if (!emailRegex.test(email)) {
     setError('email', 'El formato del email no es válido');
