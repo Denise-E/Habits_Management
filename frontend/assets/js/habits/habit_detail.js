@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryElem = document.getElementById('category');
   const goalElem = document.getElementById('goal');
   const editBtn = document.getElementById('editBtn');
+  const deleteBtn = document.getElementById('deleteBtn');
 
   // Traer datos del hábito
   fetch(`${HABITS_URL}/${habitId}`)
@@ -36,4 +37,26 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('editHabitId', habitId);
     window.location.href = './edit_habit.html';
   });
+
+  deleteBtn.addEventListener('click', () => {
+    if (confirm('¿Querés eliminar este hábito? Esta acción no se puede deshacer.')) {
+      fetch(`${HABITS_URL}/${habitId}`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Error al eliminar');
+        alert('Hábito eliminado correctamente');
+        // Limpiar sessionStorage para ese hábito
+        sessionStorage.removeItem('habitDetailId');
+        sessionStorage.removeItem('editHabitId');
+        // Redirigir a la lista de hábitos
+        window.location.href = './habits.html';
+      })
+      .catch(err => {
+        console.error('Error al eliminar hábito:', err);
+        alert('No se pudo eliminar el hábito.');
+      });
+    }
+  });
+  
 });
