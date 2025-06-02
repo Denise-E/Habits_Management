@@ -6,12 +6,12 @@ from src.routes.users_routes import users
 app = Flask(__name__)
 CORS(app)
 
-# Registro del blueprint para las rutas de hábitos
+# blueprint config
 app.register_blueprint(habits, url_prefix="/api/habits")
 app.register_blueprint(users, url_prefix="/api/users")
 
 
-# Ruta de salud para verificar si la API está activa
+# Route to verify the backend is running
 @app.route("/api/health", methods=['GET'])
 @cross_origin()
 def health():

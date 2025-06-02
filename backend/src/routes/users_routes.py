@@ -7,7 +7,7 @@ from utils.logger import logger
 users = Blueprint('users', __name__)
 
 
-@users.route('/register', methods=['POST']) # TODO add ID
+@users.route('/register', methods=['POST']) 
 @cross_origin()
 def register():
     try:

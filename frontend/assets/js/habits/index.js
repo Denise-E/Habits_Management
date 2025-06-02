@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Si estamos editando, rellenar los campos
+  // Complete the information if editing
   if (habitId) {
     fetch(`${HABITS_URL}/${habitId}`)
       .then(res => res.json())
@@ -39,12 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   form.addEventListener('submit', e => {
     e.preventDefault();
-
-    // Limpiar errores anteriores
-    // document.getElementById('nameError')?.textContent = '';
-    // document.getElementById('categoryError')?.textContent = '';
-    // document.getElementById('goalError')?.textContent = '';
-
+    
     const name = document.getElementById('name').value.trim();
     const description = document.getElementById('description').value.trim();
     const category = document.getElementById('category').value.trim();

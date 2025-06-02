@@ -7,11 +7,9 @@ document.getElementById('login-form').addEventListener('submit', async function 
   const password = document.getElementById('password').value.trim();
   let error = false;
 
-  // Limpio errores anteriores de campos
+  // Cleaning previous errors
   document.getElementById('error-email').textContent = '';
   document.getElementById('error-password').textContent = '';
-
-  // Limpio error general si existe
   let errorElement = document.getElementById('login-error');
   if (errorElement) errorElement.remove();
 
@@ -44,18 +42,17 @@ document.getElementById('login-form').addEventListener('submit', async function 
       const data = await response.json();
 
       if (!response.ok) {
-        // Crear mensaje de error usando data.error (según lo que pediste)
         const errorMsg = document.createElement('p');
         errorMsg.id = 'login-error';
         errorMsg.textContent = data.error || 'Error desconocido';
         errorMsg.style.color = 'red';
 
-        // Insertar el error justo antes del botón submit
+        // Error insert above button
         const form = document.getElementById('login-form');
         const submitBtn = form.querySelector('button[type="submit"]');
         form.insertBefore(errorMsg, submitBtn);
       } else {
-        // Login exitoso
+        // Login sucess
         sessionStorage['userEmail'] = email;
         window.location.href = './assets/pages/habits/habits.html';
       }

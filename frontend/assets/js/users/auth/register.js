@@ -3,19 +3,18 @@ const USERS_URL = window.env.BACKEND_URL + '/users';
 document.getElementById('register-form').addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  // Obtener valores
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const phone = document.getElementById('phone').value.trim();
   const birthdateRaw = document.getElementById('birthdate').value;
 
-  // Limpiar errores anteriores
+  // Cleaning previous errores
   clearErrors();
 
   let isValid = true;
 
-  // Validaciones
+  // Fields validations
   if (!name) {
     setError('name', 'El nombre es obligatorio');
     isValid = false;
@@ -53,9 +52,9 @@ document.getElementById('register-form').addEventListener('submit', async functi
 
   if (!isValid) return;
 
-  // Formatear fecha a DD-MM-YY
-  const birthdateParts = birthdateRaw.split('-'); // YYYY-MM-DD
-  const birthdate = `${birthdateParts[2]}-${birthdateParts[1]}-${birthdateParts[0].slice(2)}`; // DD-MM-YY
+  // Date formatting - result DD-MM-YY
+  const birthdateParts = birthdateRaw.split('-');
+  const birthdate = `${birthdateParts[2]}-${birthdateParts[1]}-${birthdateParts[0].slice(2)}`; 
 
   try {
     const response = await fetch(`${USERS_URL}/register`, {

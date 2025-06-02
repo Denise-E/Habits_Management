@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     habits.forEach(habit => {
       const li = document.createElement('li');
       li.style.marginBottom = '1rem';
-      li.style.cursor = 'pointer'; // Para que se note que es clickeable
+      li.style.cursor = 'pointer'; // For better style
       li.innerHTML = `
         <span>${habit.name}</span>
         <span style="float: right;">
@@ -35,13 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </span>
       `;
 
-      // Click en el li para ir al detalle
       li.addEventListener('click', () => {
         sessionStorage.setItem('detailHabitId', habit.id);
         window.location.href = './habit_detail.html';
       });
 
-      // Evitar que el click en botones propague y active el listener del li
       li.querySelector('.edit-btn').addEventListener('click', event => {
         event.stopPropagation();
         sessionStorage.setItem('editHabitId', habit.id);
@@ -56,9 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       list.appendChild(li);
     });
-
-
-      // Asociar eventos a los botones de eliminar
       const deleteButtons = document.querySelectorAll('.delete-btn');
       deleteButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -67,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
 
-      // Confirmar eliminación
+      // Confirm deletion
       confirmBtn.addEventListener('click', () => {
         if (habitIdToDelete) {
           fetch(`${HABITS_URL}/${habitIdToDelete}`, {
@@ -80,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Cancelar eliminación
+      // Cancel deletion
       cancelBtn.addEventListener('click', () => {
         habitIdToDelete = null;
         dialog.close();

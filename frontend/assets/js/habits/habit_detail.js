@@ -1,14 +1,13 @@
 const HABITS_URL = window.env.BACKEND_URL + '/habits';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Obtener el ID del hábito desde sessionStorage
   const habitId = sessionStorage.getItem('detailHabitId');
   if (!habitId) {
     alert('No se encontró el ID del hábito.');
     return;
   }
 
-  // Elementos donde mostrar los datos
+  // Getting elemnts where info is going to be shown
   const nameElem = document.getElementById('name');
   const descriptionElem = document.getElementById('description');
   const categoryElem = document.getElementById('category');
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const editBtn = document.getElementById('editBtn');
   const deleteBtn = document.getElementById('deleteBtn');
 
-  // Traer datos del hábito
+  // Get habit info
   fetch(`${HABITS_URL}/${habitId}`)
     .then(res => res.json())
     .then(habit => {
@@ -32,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('No se pudo cargar el hábito.');
     });
 
-  // Al hacer click en "Editar hábito"
   editBtn.addEventListener('click', () => {
     sessionStorage.setItem('editHabitId', habitId);
     window.location.href = './edit_habit.html';
@@ -46,10 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => {
         if (!res.ok) throw new Error('Error al eliminar');
         alert('Hábito eliminado correctamente');
-        // Limpiar sessionStorage para ese hábito
+        // Cleaning sessionStorage
         sessionStorage.removeItem('habitDetailId');
         sessionStorage.removeItem('editHabitId');
-        // Redirigir a la lista de hábitos
         window.location.href = './habits.html';
       })
       .catch(err => {
@@ -58,5 +55,5 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
-  
+
 });
