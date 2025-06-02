@@ -8,7 +8,6 @@ function setupLogoutButton() {
   console.log("Logout script loaded");
 
   const logoutButton = document.getElementById('logoutButton');
-  console.log("logoutButton is:", logoutButton);
 
   if (logoutButton) {
     logoutButton.addEventListener('click', () => {

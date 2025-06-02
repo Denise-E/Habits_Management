@@ -14,8 +14,15 @@
     <header></header>
 
     <main class="tracking-container">
-        <h1>Seguimiento de hábitos</h1>
+      <h1>Seguimiento de hábitos</h1>
 
+      <!-- Mensaje si no hay hábitos -->
+      <div id="noHabitsMessage" style="display: none; text-align: center; margin-top: 2rem;">
+        <p>Todavía no registraste ningún hábito.</p>
+      </div>
+
+      <!-- Contenido que se oculta si no hay hábitos -->
+      <div id="trackingContent">
         <!-- Selector de semana -->
         <div class="week-navigation">
           <button id="prevWeek">← Semana anterior</button>
@@ -28,17 +35,14 @@
           <thead>
             <tr id="weekDaysRow">
               <th>Hábito</th>
-              <!-- Aquí se insertan las fechas: lun, mar, ... -->
             </tr>
           </thead>
-          <tbody id="habitRows">
-            <!-- Aquí se insertan las filas de hábitos con sus checkboxes -->
-          </tbody>
+          <tbody id="habitRows"></tbody>
         </table>
 
         <section class="statistics-section">
           <h2>Analiticas de mis hábitos</h2>
-          
+
           <div class="filter-dates">
             <label for="startDate">Desde: </label>
             <input type="date" id="startDate" />
@@ -49,11 +53,9 @@
             <button id="loadStats">Mostrar estadísticas</button>
           </div>
 
-          <div id="statsResult">
-            <!-- Aquí se mostrará la tabla resumen con las estadísticas -->
-          </div>
+          <div id="statsResult"></div>
         </section>
-
+      </div>
     </main>
 
     <footer></footer>
