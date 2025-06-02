@@ -23,23 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      habits.forEach(habit => {
-        console.log("Habit:", habit)
-        const li = document.createElement('li');
-        li.style.marginBottom = '1rem';
-        li.innerHTML = `
-          <span>${habit.name}</span>
-          <span style="float: right;">
-            <button class="edit-btn" data-id="${habit.id}">✏️</button>
-            <button data-id="${habit.id}" class="delete-btn">🗑️</button>
-          </span>
-        `;
-        list.appendChild(li);
-        li.querySelector('.edit-btn').addEventListener('click', () => {
-          sessionStorage.setItem('editHabitId', habit.id);
-          window.location.href = './edit_habit.html'; // sin query params
-        });
+    habits.forEach(habit => {
+      const li = document.createElement('li');
+      li.style.marginBottom = '1rem';
+      li.style.cursor = 'pointer'; // Para que se note que es clickeable
+      li.innerHTML = `
+        <span>${habit.name}</span>
+        <span style="float: right;">
+          <button class="edit-btn" data-id="${habit.id}">✏️</button>
+          <button data-id="${habit.id}" class="delete-btn">🗑️</button>
+        </span>
+      `;
+
+      // Click en el li para ir al detalle
+      li.addEventListener('click', () => {
+        sessionStorage.setItem('detailHabitId', habit.id);
+        window.location.href = './habit_detail.html';
       });
+
+      // Evitar que el click en botones propague y active el listener del li
+      li.querySelector('.edit-btn').addEventListener('click', event => {
+        event.stopPropagation();
+        sessionStorage.setItem('editHabitId', habit.id);
+        window.location.href = './edit_habit.html';
+      });
+
+      li.querySelector('.delete-btn').addEventListener('click', event => {
+        event.stopPropagation();
+        habitIdToDelete = habit.id;
+        dialog.showModal();
+      });
+
+      list.appendChild(li);
+    });
+
 
       // Asociar eventos a los botones de eliminar
       const deleteButtons = document.querySelectorAll('.delete-btn');

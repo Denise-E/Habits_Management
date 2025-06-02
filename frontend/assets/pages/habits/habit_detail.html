@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Habits Tracker</title>
+  <link rel="icon" type="image/x-icon" href="../../img/favicon.ico">
+
+  <link rel="stylesheet" href="../../css/styles.css" >
+  <link rel="stylesheet" href="../../css/forms.css" >
+</head>
+<body>
+  <div class="wrapper">
+    <header></header>
+
+    <main class="form-container">
+      <h1>Detalle del hábito</h1>
+      <section id="habitForm">
+        <div class="form-group">
+          <strong>Nombre:</strong>
+          <p id="name"></p>
+        </div>
+        
+        <div class="form-group">
+          <strong>Descripción:</strong>
+          <p id="description"></p>
+        </div>
+        
+        <div class="form-group">
+          <strong>Categoría:</strong>
+          <p id="category"></p>
+        </div>
+        
+        <div class="form-group">
+          <strong>Meta diaria:</strong>
+          <p id="goal"></p>
+        </div>
+        
+        <button id="editBtn">Editar hábito</button>
+      </section>
+    </main>
+    <footer></footer>
+  </div>
+  <script src="../../js/auth-verification.js"></script>
+  <script src="../../config/env.js"></script>
+  <script src="../../js/include-partials.js"></script>
+  <script src="../../js/users/auth/logout.js" defer></script>
+  <script src="../../js/habits/habit_detail.js"></script>
+</body>
+</html>
