@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const categorySelect = document.getElementById('category');
   const urlParams = new URLSearchParams(window.location.search);
   const habitId = urlParams.get('id');
+  console.log("ID capturado desde URL:", habitId);
+
+
   const userEmail = sessionStorage.getItem('userEmail');
 
-  // Cargar categorías al <select>
   if (Array.isArray(categories)) {
     categories.forEach(cat => {
       const option = document.createElement('option');
@@ -27,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('description').value = habit.description || '';
         document.getElementById('category').value = habit.category;
         document.getElementById('goal').value = habit.goal;
+      })
+      .catch(err => {
+        console.error("Error cargando hábito:", err);
+        alert("No se pudo cargar el hábito.");
       });
   }
 
@@ -34,11 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
 
     // Limpiar errores anteriores
-    document.getElementById('nameError').textContent = '';
-    document.getElementById('categoryError').textContent = '';
-    document.getElementById('goalError').textContent = '';
+    // document.getElementById('nameError')?.textContent = '';
+    // document.getElementById('categoryError')?.textContent = '';
+    // document.getElementById('goalError')?.textContent = '';
 
-    // Obtener valores
     const name = document.getElementById('name').value.trim();
     const description = document.getElementById('description').value.trim();
     const category = document.getElementById('category').value.trim();

@@ -24,12 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       habits.forEach(habit => {
+        console.log("Habit:", habit)
         const li = document.createElement('li');
         li.style.marginBottom = '1rem';
         li.innerHTML = `
           <span>${habit.name}</span>
           <span style="float: right;">
-            <a href="edit_habit.html?id=${habit.id}">✏️</a>
+            <a href="/assets/pages/habits/edit_habit.html?id=${habit.id}">✏️</a>
             <button data-id="${habit.id}" class="delete-btn">🗑️</button>
           </span>
         `;
