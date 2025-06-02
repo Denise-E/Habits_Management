@@ -90,17 +90,24 @@ def update_habit(habit_id):
 @cross_origin()
 def delete_habit(habit_id):
     try:
-        logger.info("Deteling habit")
+        logger.info("Deleting habit")
         data = DBService.read_data()
-        habit_to_delete = next((habit for habit in data["habits"] if habit["id"] == habit_id), None)
 
+        # Buscar el hábito a eliminar
+        habit_to_delete = next((habit for habit in data["habits"] if habit["id"] == habit_id), None)
         if not habit_to_delete:
             return jsonify({"error": "Habit not found"}), 404
 
+        # Eliminar el hábito
         data["habits"] = [habit for habit in data["habits"] if habit["id"] != habit_id]
+
+        # Eliminar los registros de tracking asociados
+        data["tracking"] = [t for t in data["tracking"] if t["habit_id"] != habit_id]
+
         DBService.save_data(data)
 
         return jsonify(habit_to_delete), 200
+
     except Exception as e:
         logger.error(f"Error while deleting habit: {e}")
         return jsonify({"error": "Unable to delete habit"}), 400
