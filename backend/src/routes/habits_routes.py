@@ -1,3 +1,4 @@
+from src.services.user_service import UserService
 from flask import Blueprint, request, jsonify
 from datetime import datetime, date
 
@@ -10,13 +11,16 @@ from utils.logger import logger
 habits = Blueprint('habits', __name__)
 
 
-@habits.route('/<user_email>', methods=['GET'])
+@habits.route('/<string:user_email>', methods=['GET'])
 @cross_origin()
 def get_habits(user_email):
     try:
         logger.info("Getting user habits")
-        if not user_email:
-            return jsonify({"error": "Missing user_email"}), 400
+
+        user_exists = UserService.validate_user_exists(user_email)
+
+        if not user_exists:
+            return jsonify({"error": "Usuario no encontrado"}), 404   
 
         data = DBService.read_data()
         user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
@@ -27,11 +31,17 @@ def get_habits(user_email):
         return jsonify({"error": "Unable to get the information"}), 400
 
 
-@habits.route('/<int:habit_id>', methods=['GET'])
+@habits.route('/<string:user_email>/<int:habit_id>', methods=['GET'])
 @cross_origin()
-def get_habit_by_id(habit_id):
+def get_habit_by_id(user_email, habit_id):
     try:
         logger.info("Getting habit by ID")
+
+        user_exists = UserService.validate_user_exists(user_email)
+
+        if not user_exists:
+            return jsonify({"error": "Usuario no encontrado"}), 404   
+
         data = DBService.read_data()
         habit = next((h for h in data["habits"] if h["id"] == habit_id), None)
         if not habit:
@@ -51,7 +61,15 @@ def create_habit():
 
         if "user_email" not in new_habit:
             return jsonify({"error": "Missing user_email"}), 400
+        
+        if "name" not in new_habit or "category" not in new_habit or "goal" not in new_habit:
+            return jsonify({"error": "Name, category and goal required"}), 400
 
+        user_exists = UserService.validate_user_exists(new_habit["user_email"])
+
+        if not user_exists:
+            return jsonify({"error": "Usuario no encontrado"}), 404       
+        
         data = DBService.read_data()
         new_habit['id'] = len(data["habits"]) + 1
         new_habit['created_at'] = date.today().isoformat()
@@ -71,12 +89,20 @@ def update_habit(habit_id):
     try:
         logger.info("Updating habit")
         updated_habit = request.get_json()
+        user_email = updated_habit.pop("user_email")
+
+        if not user_email:
+            return jsonify({"error": "Missing user_email"}), 400
+        
+        user_exists = UserService.validate_user_exists(user_email)
+
+        if not user_exists:
+            return jsonify({"error": "Usuario no encontrado"}), 404  
 
         data = DBService.read_data()
 
         for habit in data["habits"]:
             if habit["id"] == habit_id:
-                updated_habit.pop("user_email")
                 habit.update(updated_habit)
                 DBService.save_data(data)
                 return jsonify(habit), 200
@@ -87,11 +113,17 @@ def update_habit(habit_id):
         return jsonify({"error": "Unable to update habit"}), 400
 
 
-@habits.route('/<int:habit_id>', methods=['DELETE'])
+@habits.route('/<string:user_email>/<int:habit_id>', methods=['DELETE'])
 @cross_origin()
-def delete_habit(habit_id):
+def delete_habit(user_email, habit_id):
     try:
         logger.info("Deleting habit")
+
+        user_exists = UserService.validate_user_exists(user_email)
+
+        if not user_exists:
+            return jsonify({"error": "Usuario no encontrado"}), 404   
+
         data = DBService.read_data()
 
         habit_to_delete = next((habit for habit in data["habits"] if habit["id"] == habit_id), None)

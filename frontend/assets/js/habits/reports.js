@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Confirm deletion
       confirmBtn.addEventListener('click', () => {
         if (habitIdToDelete) {
-          fetch(`${HABITS_URL}/${habitIdToDelete}`, {
+          fetch(`${HABITS_URL}/${userEmail}/${habitIdToDelete}`, {
             method: 'DELETE'
           })
           .then(() => {

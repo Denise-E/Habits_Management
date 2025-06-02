@@ -1,6 +1,7 @@
 const HABITS_URL = window.env.BACKEND_URL + '/habits';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const userEmail = sessionStorage.getItem('userEmail');
   const habitId = sessionStorage.getItem('detailHabitId');
   if (!habitId) {
     alert('No se encontró el ID del hábito.');
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const deleteBtn = document.getElementById('deleteBtn');
 
   // Get habit info
-  fetch(`${HABITS_URL}/${habitId}`)
+  fetch(`${HABITS_URL}/${userEmail}/${habitId}`)
     .then(res => res.json())
     .then(habit => {
       if (habit.error) throw new Error(habit.error);
