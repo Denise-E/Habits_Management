@@ -25,11 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const userEmail = sessionStorage.getItem('userEmail');
 
-  if (!userEmail) {
-    alert('No se encontró usuario logueado');
-    return;
-  }
-
   emailDisplay.textContent = userEmail;
 
   function loadProfile() {

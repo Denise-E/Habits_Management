@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const userEmail = sessionStorage.getItem('userEmail');
 
-  if (Array.isArray(categories)) {
+    if (Array.isArray(categories)) {
     categories.forEach(cat => {
       const option = document.createElement('option');
       option.value = cat;
@@ -28,15 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (habit.error) throw new Error(habit.error);
         document.getElementById('name').value = habit.name;
         document.getElementById('description').value = habit.description || '';
-        document.getElementById('category').value = habit.category;
         document.getElementById('goal').value = habit.goal;
+
+        // Seleccionar la categoría actual del hábito
+        const categorySelect = document.getElementById('category');
+        categorySelect.value = habit.category;
       })
       .catch(err => {
         console.error("Error cargando hábito:", err);
         alert("No se pudo cargar el hábito.");
       });
   }
-
+  
   form.addEventListener('submit', e => {
     e.preventDefault();
     
