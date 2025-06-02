@@ -37,16 +37,5 @@
             "created_at": "2025-06-01"
         }
     ],
-    "tracking": [
-        {
-            "habit_id": 2,
-            "date": "2025-06-02",
-            "id": 1
-        },
-        {
-            "habit_id": 2,
-            "date": "2025-06-02",
-            "id": 2
-        }
-    ]
+    "tracking": []
 }
