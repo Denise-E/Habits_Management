@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const emailDisplay = document.getElementById('emailDisplay');
   const nameDisplay = document.getElementById('nameDisplay');
   const phoneDisplay = document.getElementById('phoneDisplay');
-  const birthdateDisplay = document.getElementById('birthdateDisplay');
+  const birthday_dateDisplay = document.getElementById('birthday_dateDisplay');
 
   const nameInput = document.getElementById('name');
   const phoneInput = document.getElementById('phone');
@@ -34,11 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then(res => res.json())
       .then(data => {
-        const { name = '', phone = '', birthdate = '' } = data;
+        const { name = '', phone = '', birthday_date = '' } = data;
 
         nameDisplay.textContent = name;
         phoneDisplay.textContent = phone;
-        birthdateDisplay.textContent = birthdate;
+        birthday_dateDisplay.textContent = birthday_date;
 
         nameInput.value = name;
         phoneInput.value = phone;
@@ -105,9 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
     if (!valid) return;
 
-    const payload = { email: userEmail, name, phone };
+    const payload = { name, phone };
 
-    fetch(USERS_URL, {
+    fetch(`${USERS_URL}/${userEmail}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

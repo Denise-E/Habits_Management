@@ -7,7 +7,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const phone = document.getElementById('phone').value.trim();
-  const birthdateRaw = document.getElementById('birthdate').value;
+  const birthday_dateRaw = document.getElementById('birthday_date').value;
 
   // Cleaning previous errores
   clearErrors();
@@ -45,22 +45,22 @@ document.getElementById('register-form').addEventListener('submit', async functi
     isValid = false;
   }
 
-  if (!birthdateRaw) {
-    setError('birthdate', 'La fecha de nacimiento es obligatoria');
+  if (!birthday_dateRaw) {
+    setError('birthday_date', 'La fecha de nacimiento es obligatoria');
     isValid = false;
   }
 
   if (!isValid) return;
 
   // Date formatting - result DD-MM-YY
-  const birthdateParts = birthdateRaw.split('-');
-  const birthdate = `${birthdateParts[2]}-${birthdateParts[1]}-${birthdateParts[0].slice(2)}`; 
+  const birthday_dateParts = birthday_dateRaw.split('-');
+  const birthday_date = `${birthday_dateParts[2]}-${birthday_dateParts[1]}-${birthday_dateParts[0].slice(2)}`; 
 
   try {
     const response = await fetch(`${USERS_URL}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password, phone, birthdate })
+      body: JSON.stringify({ name, email, password, phone, birthday_date })
     });
 
     const data = await response.json();

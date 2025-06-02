@@ -4,9 +4,17 @@
             "name": "Denise Demo",
             "email": "denise@gmail.com",
             "password": "123456",
-            "phone": "1145457777",
-            "birthday_date": "02-01-01",
+            "phone": "1145457766",
+            "birthday_date": "02-01-2001",
             "id": 1
+        },
+        {
+            "name": "Denise Eichenblat",
+            "email": "deichenblat@gmail.com",
+            "password": "ejat38a!6",
+            "phone": "1177333311",
+            "birthday_date": "01-02-2001",
+            "id": 2
         }
     ],
     "habits": [
