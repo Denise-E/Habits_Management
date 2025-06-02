@@ -11,12 +11,21 @@
     ],
     "habits": [
         {
-            "name": "Hidratarme",
+            "name": "Hidratarme (2L agua)",
             "description": "Tomar 2L de agua a diario",
             "category": "Salud f\u00edsica",
             "goal": "Diaria",
             "user_email": "denise@gmail.com",
             "id": 1,
+            "created_at": "2025-06-01"
+        },
+        {
+            "name": "Moverme 5/7 d\u00edas",
+            "description": "Entrenar o al menos salir a caminar 5 de los 7 d\u00edas de la semana",
+            "category": "Salud f\u00edsica",
+            "goal": "5 veces a la semana",
+            "user_email": "denise@gmail.com",
+            "id": 2,
             "created_at": "2025-06-01"
         }
     ],

@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('habitForm');
   const categorySelect = document.getElementById('category');
   const urlParams = new URLSearchParams(window.location.search);
-  const habitId = urlParams.get('id');
-  console.log("ID capturado desde URL:", habitId);
+  const habitId = sessionStorage.getItem('editHabitId');
+  console.log("ID cargado desde sessionStorage:", habitId);
+
 
 
   const userEmail = sessionStorage.getItem('userEmail');
@@ -91,4 +92,5 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Ocurrió un error al guardar el hábito.");
       });
   });
+  sessionStorage.removeItem('editHabitId');
 });

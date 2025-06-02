@@ -30,11 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
         li.innerHTML = `
           <span>${habit.name}</span>
           <span style="float: right;">
-            <a href="/assets/pages/habits/edit_habit.html?id=${habit.id}">✏️</a>
+            <button class="edit-btn" data-id="${habit.id}">✏️</button>
             <button data-id="${habit.id}" class="delete-btn">🗑️</button>
           </span>
         `;
         list.appendChild(li);
+        li.querySelector('.edit-btn').addEventListener('click', () => {
+          sessionStorage.setItem('editHabitId', habit.id);
+          window.location.href = './edit_habit.html'; // sin query params
+        });
       });
 
       // Asociar eventos a los botones de eliminar
