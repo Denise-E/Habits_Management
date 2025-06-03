@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   deleteBtn.addEventListener('click', () => {
     if (confirm('¿Querés eliminar este hábito? Esta acción no se puede deshacer.')) {
-      fetch(`${HABITS_URL}/${habitId}`, {
+      fetch(`${HABITS_URL}/${userEmail}/${habitId}`, {
         method: 'DELETE'
       })
       .then(res => {

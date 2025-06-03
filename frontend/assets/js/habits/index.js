@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Complete the information if editing
   if (habitId) {
-    fetch(`${HABITS_URL}/${habitId}`)
+    fetch(`${HABITS_URL}/${userEmail}/${habitId}`)
       .then(res => res.json())
       .then(habit => {
         if (habit.error) throw new Error(habit.error);
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify(habit)
     };
 
-    const targetUrl = habitId ? `${HABITS_URL}/${habitId}` : HABITS_URL;
+    const targetUrl = habitId ? `${HABITS_URL}/${userEmail}/${habitId}` : HABITS_URL;
 
     fetch(targetUrl, fetchOptions)
       .then(() => window.location.href = './habits.html')

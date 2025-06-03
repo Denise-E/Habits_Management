@@ -4,7 +4,7 @@
             "name": "Denise Demo",
             "email": "denise@gmail.com",
             "password": "123456",
-            "phone": "1145457766",
+            "phone": "1145457765",
             "birthday_date": "02-01-2001",
             "id": 1
         },
@@ -15,43 +15,205 @@
             "phone": "1177333311",
             "birthday_date": "01-02-2001",
             "id": 2
+        },
+        {
+            "name": "Denise Prueba",
+            "email": "prueba@gmail.com",
+            "password": "1111111",
+            "phone": "1111111111111",
+            "birthday_date": "02-01-01",
+            "id": 3
         }
     ],
     "habits": [
         {
-            "name": "Hidratarme (1.5L agua)",
-            "description": "Entrenar o al menos salir a caminar 5 de los 7 d\u00edas de la semana",
-            "category": "Salud f\u00edsica",
-            "goal": "5 veces a la semana",
+            "name": "Leer",
+            "description": "Dedicar un momento de lectura cada d\u00eda para relajarme",
+            "category": "Salud mental",
+            "goal": "10 minutos al d\u00eda, todos los d\u00edas",
             "user_email": "denise@gmail.com",
-            "id": 2,
-            "created_at": "2025-06-01"
+            "id": 1,
+            "created_at": "2025-05-10"
         },
         {
-            "name": "Hidratarme (2L agua)",
-            "description": "Tomar 2L de agua a diario",
+            "name": "\u00a1Hidratarme! 2L diarios",
+            "description": "Tomar 2L de agua al d\u00eda",
             "category": "Salud f\u00edsica",
             "goal": "Diaria",
             "user_email": "denise@gmail.com",
-            "id": 1,
-            "created_at": "2025-06-01"
+            "id": 2,
+            "created_at": "2025-05-10"
+        },
+        {
+            "name": "Moverme al menos 4 veces por semana",
+            "description": "Ir al gym o salir a caminar",
+            "category": "Ejercicio",
+            "goal": "4 a 6 veces por semana",
+            "user_email": "denise@gmail.com",
+            "id": 3,
+            "created_at": "2025-06-02"
         }
     ],
     "tracking": [
         {
-            "habit_id": 2,
+            "habit_id": 1,
             "date": "2025-06-02",
             "id": 1
         },
         {
-            "habit_id": 2,
+            "habit_id": 1,
             "date": "2025-06-03",
             "id": 2
         },
         {
+            "habit_id": 3,
+            "date": "2025-06-02",
+            "id": 4
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-10",
+            "id": 5
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-11",
+            "id": 6
+        },
+        {
             "habit_id": 2,
-            "date": "02-03-2025",
-            "id": 3
+            "date": "2025-05-11",
+            "id": 7
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-12",
+            "id": 8
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-14",
+            "id": 9
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-15",
+            "id": 10
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-17",
+            "id": 11
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-18",
+            "id": 12
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-12",
+            "id": 13
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-13",
+            "id": 14
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-15",
+            "id": 15
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-19",
+            "id": 16
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-20",
+            "id": 17
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-22",
+            "id": 18
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-20",
+            "id": 19
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-21",
+            "id": 20
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-23",
+            "id": 21
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-26",
+            "id": 22
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-28",
+            "id": 23
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-27",
+            "id": 24
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-26",
+            "id": 25
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-29",
+            "id": 26
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-05-31",
+            "id": 27
+        },
+        {
+            "habit_id": 1,
+            "date": "2025-06-01",
+            "id": 28
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-29",
+            "id": 29
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-30",
+            "id": 30
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-05-31",
+            "id": 31
+        },
+        {
+            "habit_id": 2,
+            "date": "2025-06-02",
+            "id": 31
+        },
+        {
+            "habit_id": 3,
+            "date": "2025-06-03",
+            "id": 32
         }
     ]
 }

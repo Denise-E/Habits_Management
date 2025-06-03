@@ -6,7 +6,6 @@ function logout() {
 
 function setupLogoutButton() {
   console.log("Logout script loaded");
-
   const logoutButton = document.getElementById('logoutButton');
 
   if (logoutButton) {
