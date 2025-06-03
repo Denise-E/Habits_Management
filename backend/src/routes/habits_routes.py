@@ -143,11 +143,21 @@ def delete_habit(user_email, habit_id):
         return jsonify({"error": "Unable to delete habit"}), 400
 
 # Habits Tracking Endpoints
-@habits.route('/tracking/detail', methods=['POST'])
+@habits.route('/tracking/detail/<string:user_email>', methods=['POST'])
 @cross_origin()
-def get_tracking():
+def get_tracking(user_email):
     try:
+        logger.info("Getting habits between given dates")
+        user_exists = UserService.validate_user_exists(user_email)
+
+        if not user_exists:
+            return jsonify({"error":  "User not found"}), 404   
+    
         data = request.get_json()
+
+        if 'from' not in data or 'to' not in data:
+            return jsonify({"error": "From and to date required"}), 400
+
         from_date = data.get('from')
         to_date = data.get('to')
         data = DBService.read_data()
@@ -164,13 +174,22 @@ def get_tracking():
         logger.error(f"Error fetching tracking: {e}")
         return jsonify({"error": "Error fetching tracking data"}), 400
 
-@habits.route('/tracking', methods=['POST'])
+@habits.route('/tracking/<string:user_email>', methods=['POST'])
 @cross_origin()
-def create_tracking():
+def create_tracking(user_email):
     try:
+        logger.info("Creating habit tracking")
+        user_exists = UserService.validate_user_exists(user_email)
+
+        if not user_exists:
+            return jsonify({"error": "User not found"}), 404 
+    
         tracking_data = request.get_json()
         data = DBService.read_data()
 
+        if not "habit_id" in tracking_data or not "date" in tracking_data:
+            return jsonify({"error": "Date and habit ID required"}), 400
+    
         new_track = {
             "habit_id": tracking_data["habit_id"],
             "date": tracking_data["date"]
@@ -178,8 +197,7 @@ def create_tracking():
 
         logger.info(f"New track to save: {new_track}")
 
-        if not new_track["habit_id"] or not new_track["date"]:
-            return jsonify({"error": "Date and habit_id required"}), 400
+
         new_track['id'] = len(data["tracking"]) + 1
 
         if new_track not in data["tracking"]:
@@ -192,16 +210,36 @@ def create_tracking():
         return jsonify({"error": "Error saving tracking data"}), 400
 
 
-@habits.route('/tracking/<int:habit_id>/<string:habit_date>', methods=['DELETE'])
+@habits.route('/tracking/<string:user_email>/<int:habit_id>/<string:habit_date>', methods=['DELETE'])
 @cross_origin()
-def delete_tracking(habit_id, habit_date):
+def delete_tracking(user_email, habit_id, habit_date):
     try:
+        logger.info("Deleting habit tracking")
+        
+        if not UserService.validate_user_exists(user_email):
+            return jsonify({"error": "User not found"}), 404
+
         data = DBService.read_data()
 
-        data["tracking"] = [t for t in data["tracking"] if not (t["habit_id"] == habit_id and t["date"] == habit_date)]
+        # Verificar si existe un hábito con ese ID
+        habit_exists = any(h["id"] == habit_id for h in data["habits"])
+        if not habit_exists:
+            return jsonify({"error": "Habit not found"}), 404
+
+        original_count = len(data["tracking"])
+        data["tracking"] = [
+            t for t in data["tracking"]
+            if not (t["habit_id"] == habit_id and t["date"] == habit_date)
+        ]
+
+        if len(data["tracking"]) == original_count:
+            # No se eliminó nada: no existía ese tracking
+            return jsonify({"message": "No matching tracking entry found"}), 200
+
         DBService.save_data(data)
 
         return jsonify({"message": "Tracking entry deleted"}), 200
+
     except Exception as e:
         logger.error(f"Error deleting tracking: {e}")
         return jsonify({"error": "Error deleting tracking data"}), 400

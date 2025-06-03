@@ -1,6 +1,8 @@
 const TRACKING_URL = window.env.BACKEND_URL + '/habits/tracking'
 
 document.addEventListener('DOMContentLoaded', () => {
+  const userEmail = sessionStorage.getItem('userEmail');
+
   // Date formatting into YYYY-MM-DD
   function formatDate(date) {
     return date.toISOString().split('T')[0];
@@ -93,14 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (checkbox.checked) {
-      fetch(`${TRACKING_URL}`, {
+      fetch(`${TRACKING_URL}/${userEmail}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       })
       .catch(err => console.error('Error al guardar tracking:', err));
     } else {
-      fetch(`${TRACKING_URL}/${habitId}/${date}`, {
+      fetch(`${TRACKING_URL}/${userEmail}/${habitId}/${date}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -112,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fromDate = formatDate(currentMonday);
     const toDate = formatDate(new Date(currentMonday.getTime() + 6 * 86400000));
 
-    fetch(`${TRACKING_URL}/detail`, {
+    fetch(`${TRACKING_URL}/detail/${userEmail}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: fromDate, to: toDate })
@@ -165,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      fetch(`${TRACKING_URL}/detail`, {
+      fetch(`${TRACKING_URL}/detail/${userEmail}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ from: fromDate, to: toDate })
@@ -212,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Analytics update
   function loadStats(fromDate, toDate) {
-    fetch(`${TRACKING_URL}/detail`, {
+    fetch(`${TRACKING_URL}/detail/${userEmail}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: fromDate, to: toDate })
@@ -294,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if(fetchOptions["method"] == 'POST'){
-      fetch(TRACKING_URL, fetchOptions)
+      fetch(`${TRACKING_URL}/${userEmail}`, fetchOptions)
         .then(() => {
           // Analytics update if the section is not hidden 
           if (
@@ -308,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.error('Error al actualizar tracking:', err));
       }else{
-        fetch(`${TRACKING_URL}/${habitId}/${date}`, {
+        fetch(`${TRACKING_URL}/${userEmail}/${habitId}/${date}`, {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
         })
