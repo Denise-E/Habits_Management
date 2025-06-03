@@ -152,7 +152,7 @@ def get_tracking(user_email):
 
         if not user_exists:
             return jsonify({"error":  "User not found"}), 404   
-    
+
         data = request.get_json()
 
         if 'from' not in data or 'to' not in data:
@@ -160,16 +160,26 @@ def get_tracking(user_email):
 
         from_date = data.get('from')
         to_date = data.get('to')
-        data = DBService.read_data()
+        db_data = DBService.read_data()
 
-        tracking = [t for t in data["tracking"] if from_date <= t["date"] <= to_date]
+        # 1. Obtener hábitos del usuario
+        user_habits = [h for h in db_data["habits"] if h["user_email"] == user_email]
+        user_habit_ids = {h["id"] for h in user_habits}
 
-        habits_info = {
-            "habits": data["habits"],
-            "tracking": tracking
+        # 2. Filtrar trackings por rango de fechas Y habit_id del usuario
+        user_tracking = [
+            t for t in db_data["tracking"]
+            if from_date <= t["date"] <= to_date and t["habit_id"] in user_habit_ids
+        ]
+
+        response = {
+            "habits": user_habits,
+            "tracking": user_tracking
         }
-        logger.info(f"Trackings found: {habits_info}")
-        return jsonify(habits_info), 200
+
+        logger.info(f"Trackings found: {response}")
+        return jsonify(response), 200
+
     except Exception as e:
         logger.error(f"Error fetching tracking: {e}")
         return jsonify({"error": "Error fetching tracking data"}), 400

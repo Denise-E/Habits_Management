@@ -15,8 +15,10 @@
 
     <main class="tracking-container">
         <h1>Seguimiento de hábitos</h1>
+        <p id="noHabitsMessage">Debe registrar al menos un hábito para habilitar esta sección.</p>
 
-        <!-- Selector de semana -->
+        <div id="table-section">
+                  <!-- Selector de semana -->
         <div class="week-navigation">
           <button id="prevWeek">← Semana anterior</button>
           <span id="currentWeekLabel"></span>
@@ -35,6 +37,7 @@
             <!-- Aquí se insertan las filas de hábitos con sus checkboxes -->
           </tbody>
         </table>
+        </div>
 
         <section class="statistics-section">
           <h2>Analiticas de mis hábitos</h2>

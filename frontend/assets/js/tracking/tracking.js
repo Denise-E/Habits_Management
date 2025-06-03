@@ -121,13 +121,31 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(res => res.json())
     .then(data => {
+      const { habits, tracking } = data;
+
       renderWeekDates();
-      renderHabits(data.habits, data.tracking);
+
+      const noHabitsMessage = document.getElementById('noHabitsMessage');
+      const trackingTable = document.getElementById('table-section');
+      const statsSection = document.querySelector('.statistics-section');
+
+      if (!habits || habits.length === 0) {
+        habitRows.innerHTML = ''; // Vacía la tabla si no hay hábitos
+        noHabitsMessage.style.display = 'block';
+        noHabitsMessage.style.textAlign = 'center'
+        statsSection.style.display = 'none';
+        trackingTable.style.display = 'none';
+      } else {
+        noHabitsMessage.style.display = 'none';
+        statsSection.style.display = 'block';
+        renderHabits(habits, tracking);
+      }
     })
     .catch(err => {
       console.error('Error cargando tracking:', err);
     });
   }
+
 
   prevWeekBtn.addEventListener('click', () => {
     currentMonday.setDate(currentMonday.getDate() - 7);
