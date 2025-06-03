@@ -72,7 +72,7 @@ def get_user(user_email):
         user = next((u for u in db["users"] if u["email"] == user_email), None)
 
         if not user:
-            return jsonify({"error": "Usuario no encontrado"}), 404
+            return jsonify({"error": "User not found"}), 404
 
         return jsonify({"id": user["id"], "name": user["name"], "email": user["email"], "phone": user["phone"], "birthday_date": user["birthday_date"]}), 200
     except Exception as e:
@@ -96,7 +96,7 @@ def update_user(user_email):
         user = next((u for u in db["users"] if u["email"] == user_email), None)
 
         if not user:
-            return jsonify({"error": "Usuario no encontrado"}), 404
+            return jsonify({"error": "User not found"}), 404
 
         if name is not None:
             user["name"] = name
@@ -119,7 +119,7 @@ def delete_user(user_email):
         user_index = next((i for i, u in enumerate(db["users"]) if u["email"] == user_email), None)
 
         if user_index is None:
-            return jsonify({"error": "Usuario no encontrado"}), 404
+            return jsonify({"error": "User not found"}), 404
 
         deleted_user = db["users"].pop(user_index)
         

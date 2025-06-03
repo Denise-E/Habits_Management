@@ -20,7 +20,7 @@ def get_habits(user_email):
         user_exists = UserService.validate_user_exists(user_email)
 
         if not user_exists:
-            return jsonify({"error": "Usuario no encontrado"}), 404   
+            return jsonify({"error": "User not found"}), 404   
 
         data = DBService.read_data()
         user_habits = [h for h in data["habits"] if h["user_email"] == user_email]
@@ -40,7 +40,7 @@ def get_habit_by_id(user_email, habit_id):
         user_exists = UserService.validate_user_exists(user_email)
 
         if not user_exists:
-            return jsonify({"error": "Usuario no encontrado"}), 404   
+            return jsonify({"error": "User not found"}), 404   
 
         data = DBService.read_data()
         habit = next((h for h in data["habits"] if h["id"] == habit_id), None)
@@ -68,7 +68,7 @@ def create_habit():
         user_exists = UserService.validate_user_exists(new_habit["user_email"])
 
         if not user_exists:
-            return jsonify({"error": "Usuario no encontrado"}), 404       
+            return jsonify({"error": "User not found"}), 404       
         
         data = DBService.read_data()
         new_habit['id'] = len(data["habits"]) + 1
@@ -97,7 +97,7 @@ def update_habit(habit_id):
         user_exists = UserService.validate_user_exists(user_email)
 
         if not user_exists:
-            return jsonify({"error": "Usuario no encontrado"}), 404  
+            return jsonify({"error": "User not found"}), 404  
 
         data = DBService.read_data()
 
@@ -122,7 +122,7 @@ def delete_habit(user_email, habit_id):
         user_exists = UserService.validate_user_exists(user_email)
 
         if not user_exists:
-            return jsonify({"error": "Usuario no encontrado"}), 404   
+            return jsonify({"error": "User not found"}), 404   
 
         data = DBService.read_data()
 
